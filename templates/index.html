@@ -1,15 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>MakersBnB</title>
-
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
+      <title>MakersBnB</title>
+      <link rel="stylesheet" href="style.css" >
+      <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&family=Roboto&display=swap" rel="stylesheet">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <meta charset="UTF-8">
     </head>
+
     <body>
-        <p>This is the homepage.</h1>
+      <div class="navbar">
+        <div>
+        <img class="primary-icon" src="images/makers-logo.png" class="logo">
+        </div>
+
+        <ul class="nav-list" id="navi-list">
+          <li class="list-item"><a href="index.html">Spaces</a></li>
+          <li class="list-item"><a href="requests.html">Requests</a></li>
+          <li class="list-item"><a href="list.html">List a space</a></li>
+          <li class="list-item"><a href="signout.html">Signout</a></li>
+        </ul>
+      </div>
+
+      <div class="banner">
+        <img class="banner-image" src="images/banner.jpg">
+        <div class="header-text"><h2>MakersBnb</h2> <h4> A home away from home <h4></div>
+      </div>
+
+      <div class="intro">
+        <h1>Book a Space</h1>
+        <p>Welcome to the hottest property booking on the block. Get inspired and browse below, or enter your travel dates to view available properties.</p>
+      </div>
+
+   
+        <form class="specify-dates">
+            <div>
+            <h4>Available from (dd/mm/yy)</h4>
+            <input>
+            </div>
+            <div>
+            <h4>Available to (dd/mm/yy)</h4>
+            <input>
+            </div>
+            <button class="specify-button">List spaces</button>
+        </form>
+   
+      <!-- {% for album in albums %} -->
+      
+      <div class="space">
+        <div class="column">
+          <div class="card">
+            <img
+              class="space-image"
+              src="images/house1.jpg"
+              alt="House1"
+              style="width: 100%"
+            />
+            <div class="container">
+              <h3>{{space.name}}</h3>
+              <p class="price">{{space.price}}</p>
+              <p class="description">{{space.description}}</p>
+              <div class="buttonalign">
+                <button class="space-button">Read more</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- {% endfor %} -->
+
+        <div class="column">
+            <div class="card">
+            <img
+                class="space-image"
+                src="images/house2.jpg"
+                alt="House1"
+                style="width: 100%"
+            />
+            <div class="container">
+                <h3>{{space.name}}</h3>
+                <p class="price">{{space.price}}</p>
+                <p class="description">{{space.description}}</p>
+                <div class="buttonalign">
+                <button class="space-button">Read more</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+            <img
+                class="space-image"
+                src="images/house3.jpg"
+                alt="House1"
+                style="width: 100%"
+            />
+            <div class="container">
+                <h3>{{space.name}}</h3>
+                <p class="price">{{space.price}}</p>
+                <p class="description">{{space.description}}</p>
+                <div class="buttonalign">
+                <button class="space-button">Read more</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+            <img
+                class="space-image"
+                src="images/house4.jpg"
+                alt="House1"
+                style="width: 100%"
+            />
+            <div class="container">
+                <h3>{{space.name}}</h3>
+                <p class="price">{{space.price}}</p>
+                <p class="description">{{space.description}}</p>
+                <div class="buttonalign">
+                <button class="space-button">Read more</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+            <img
+                class="space-image"
+                src="images/house5.jpg"
+                alt="House1"
+                style="width: 100%"
+            />
+            <div class="container">
+                <h3>{{space.name}}</h3>
+                <p class="price">{{space.price}}</p>
+                <p class="description">{{space.description}}</p>
+                <div class="buttonalign">
+                <button class="space-button">Read more</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+            <img
+                class="space-image"
+                src="images/house6.jpg"
+                alt="House1"
+                style="width: 100%"
+            />
+            <div class="container">
+                <h3>{{space.name}}</h3>
+                <p class="price">{{space.price}}</p>
+                <p class="description">{{space.description}}</p>
+                <div class="buttonalign">
+                <button class="space-button">Read more</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
     </body>
 </html>
