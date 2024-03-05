@@ -32,11 +32,21 @@ def test_get_all_spaces(page, test_web_address, db_connection, web_client):
 
 # check each individual space on /spaces/<space_id>
 
-def test_get_individual_space(page, test_web_address, db_connection, space_id=1):
+def test_get_individual_space_1(page, test_web_address, db_connection, space_id=1):
     db_connection.seed('seeds/spaces_table.sql')
     page.goto(f'http://{test_web_address}/spaces/{space_id}')
     header = page.locator('h1')
+    space_info = page.locator('p')
     expect(header).to_have_text('Wizarding Cupboard')
+    expect(space_info).to_have_text('Location: London\nDescription: A cosy room under the stairs. Comes with complementary spiders.\nPrice per night: 50.0')
+
+def test_get_individual_space_2(page, test_web_address, db_connection, space_id=2):
+    db_connection.seed('seeds/spaces_table.sql')
+    page.goto(f'http://{test_web_address}/spaces/{space_id}')
+    header = page.locator('h1')
+    space_info = page.locator('p')
+    expect(header).to_have_text('Amore Penthouse')
+    expect(space_info).to_have_text('Location: Paris\nDescription: Within view of the Eiffel Tower, this penthouse is your parisian dream.\nPrice per night: 87.0')
 
 
 # def test_get_album_1(page, test_web_address, db_connection, album_id=1):
