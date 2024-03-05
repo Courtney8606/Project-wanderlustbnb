@@ -27,6 +27,7 @@ CREATE TABLE users (
 );
 
 -- Finally, we add any records that are needed for the tests to run
+
 INSERT INTO spaces (name, booking_date, location, price, description, user_id) VALUES ('Wizarding Cupboard', '2024-05-12', 'London', 50.00, 'A cosy room under the stairs. Comes with complementary spiders.', 1);
 INSERT INTO spaces (name, booking_date, location, price, description, user_id) VALUES ('Amore Penthouse', '2024-07-12', 'Paris', 87.00, 'Within view of the Eiffel Tower, this penthouse is your parisian dream.', 2);
 INSERT INTO spaces (name, booking_date, location, price, description, user_id) VALUES ('Paella Place', '2024-07-14', 'Madrid', 31.59, 'Eat paella and sleep.', 3);
@@ -35,3 +36,4 @@ INSERT INTO spaces (name, booking_date, location, price, description, user_id) V
 INSERT INTO users (username, name, password) VALUES ('mrs_dursley', 'Petunia Dursley', 'hatemynephew123');
 INSERT INTO users (username, name, password) VALUES ('ratatouille', 'Remy Rat', 'kissthecook');
 INSERT INTO users (username, name, password) VALUES ('montoya', 'Inigo Montoya', 'prepare2die');
+
