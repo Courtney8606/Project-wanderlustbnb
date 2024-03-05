@@ -25,7 +25,7 @@ def get_all_spaces():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
     spaces = space_repository.all()
-    return render_template('all.html', spaces=spaces) # all.html still pending
+    return render_template('spaces/all.html', spaces=spaces) # all.html still pending
 
 
 # show all properties on specific date
