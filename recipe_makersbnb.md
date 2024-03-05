@@ -50,7 +50,7 @@ INSERT INTO spaces (id, name, date_booked, location, price, description, user_id
 Run this SQL file on the database to truncate (empty) the table, and insert the seed data. Be mindful of the fact any existing records in the table will be deleted.
 
 ```bash
-psql -h 127.0.0.1 your_database_name < seeds_{table_name}.sql
+psql -h 127.0.0.1 makersbnb < seeds/spaces_table.sql
 ```
 
 ## 3. Define the class names
