@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+from lib.space_repository import Space, SpaceRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -13,15 +14,18 @@ app = Flask(__name__)
 #   ; open http://localhost:5000/index
 @app.route('/index', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    connection = get_flask_database_connection(app)
+    space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
+    spaces = space_repository.all()
+    return render_template('index.html', spaces=spaces)
 
 # show all properties
 @app.route('/spaces', methods=['GET'])
 def get_all_spaces():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
-    all_spaces = space_repository.all()
-    return render_template('all.html', spaces=all_spaces) # all.html still pending
+    spaces = space_repository.all()
+    return render_template('spaces/all.html', spaces=spaces) # all.html still pending
 
 
 # show all properties on specific date

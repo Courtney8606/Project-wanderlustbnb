@@ -53,7 +53,7 @@ def test_delete_space(db_connection):
 def test_update_space(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
     repository = SpaceRepository(db_connection)
-    space = Space(1, 'Cupboard under the stairs', datetime.date(2024, 5, 12), 'London', 50.00, 'A cosy room under the stairs. Comes with complementary spiders.', 1),
+    space = Space(1, 'Cupboard under the stairs', datetime.date(2024, 5, 12), 'London', 50.00, 'A cosy room under the stairs. Comes with complementary spiders.', 1)
     repository.update(space)
     result = repository.all()
     assert result == [
@@ -62,4 +62,4 @@ def test_update_space(db_connection):
         Space(4, 'Mi Casa', datetime.date(2024, 7, 12), 'Madrid', 45.50, 'Es tu Casa.', 3),
         Space(1, 'Cupboard under the stairs', datetime.date(2024, 5, 12), 'London', 50.00, 'A cosy room under the stairs. Comes with complementary spiders.', 1)
     ]
-    
+

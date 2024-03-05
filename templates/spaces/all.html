@@ -9,14 +9,13 @@
     </head>
 
     <body>
-        <h1>{{space.name}}</h1>
 
-        <!-- Can we add user name and review to a listing - add to user database, and pull into relevant routes -->
-
-        <p>
-        Location: {{space.location}} <br>
-        Description: {{space.description}} <br>
-        Price per night: {{space.price}}
-        </p>
+        {% for space in spaces %}
+        <div>
+            Name: {{space.name}} <br> 
+            Location: {{space.location}}
+        </div>
+        <br>
+        {% endfor %}
     </body>
 </html>
