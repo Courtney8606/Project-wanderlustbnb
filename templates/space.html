@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title>MakersBnB</title>
+      <!-- <link rel="stylesheet" href="/style.css" /> -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+      <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&family=Roboto&display=swap" rel="stylesheet">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <meta charset="UTF-8">
+    </head>
+
+    <body>
+        <div class="navbar">
+          <div>
+          <img class="primary-icon" src="static/images/makers-logo.png" class="logo">
+          </div>
+  
+          <ul class="nav-list" id="navi-list">
+            <li class="list-item"><a href="index.html">Spaces</a></li>
+            <li class="list-item"><a href="requests.html">Requests</a></li>
+            <li class="list-item"><a href="list.html">List a space</a></li>
+            <li class="list-item"><a href="signout.html">Signout</a></li>
+          </ul>
+        </div>
+  
+        <div class="banner">
+          <img class="banner-image" src="static/images/banner.jpg">
+          <div class="header-text"><h2>House</h2> <h4> A whimisical place to stay <h4></div>
+        </div>
+
+        <h1>{{space.name}}</h1>
+        <!-- Can we add user name and review to a listing - add to user database, and pull into relevant routes -->
+        <h3>{{space.price}}</h3>
+        <h3>{{space.location}}</h3>
+        <hr>
+        <p>{{space.description}}</p>
+          
+</body>  
+</html>  
+
+        
+
