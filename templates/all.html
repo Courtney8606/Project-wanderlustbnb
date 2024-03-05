@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title>MakersBnB</title>
+      <link rel="stylesheet" href="style.css" >
+      <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&family=Roboto&display=swap" rel="stylesheet">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <meta charset="UTF-8">
+    </head>
+
+    <body>
+
+        {% for space in spaces %}
+        <div>
+            Name: {{space.name}} <br> 
+            Location: {{space.location}}
+        </div>
+        <br>
+        {% endfor %}
+    </body>
+</html>
