@@ -29,3 +29,4 @@ class SpaceRepository():
     
     def update(self, space):
         self._connection.execute('UPDATE spaces SET name = %s, booking_date = %s, location = %s, price = %s, description = %s, user_id = %s WHERE id = %s', [space.name, space.booking_date, space.location, space.price, space.description, space.user_id, space.id])
+        
