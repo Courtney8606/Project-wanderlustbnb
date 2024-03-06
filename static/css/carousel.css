@@ -27,6 +27,15 @@ body {
   height: 32rem;
 }
 
+.carousel-image{
+  filter: brightness(50%);
+  object-fit: cover;
+}
+
+.photo-cred{
+  font-size: 0.5rem;
+}
+
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
@@ -69,6 +78,10 @@ body {
     font-size: 1.25rem;
     line-height: 1.4;
   }
+  
+  .photo-cred{
+    font-size: 0.5rem;
+  }
 
   .featurette-heading {
     font-size: 50px;
@@ -79,4 +92,16 @@ body {
   .featurette-heading {
     margin-top: 7rem;
   }
+}
+
+.avbl{
+  margin-bottom: 1.5rem;
+}
+
+.container-availability{
+  margin-bottom: 2rem;
+}
+
+.container-availability > p{
+  margin-bottom: 0;
 }
