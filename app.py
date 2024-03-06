@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import Space, SpaceRepository
+from lib.booking_repository import BookingRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -46,6 +47,14 @@ def get_successful_booking(space_id):
     space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
     space = space_repository.find(space_id) # assuming the method is called #find
     return render_template('booking/success.html', space=space) # page that says 'your booking at [SPACE] has been successful!
+
+@app.route('/user/<int:user_id>/requests', methods=['GET'])
+def get_unapproved_bookings(user_id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    unapproved = booking_repository.unapproved_bookings(user_id)
+    return render_template('requests.html', unapproved=unapproved)
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
