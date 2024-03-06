@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS spaces;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS users_id_seq;
+DROP TABLE IF EXISTS bookings;
+DROP SEQUENCE IF EXISTS bookings_id_seq;
 
 CREATE SEQUENCE IF NOT EXISTS spaces_id_seq;
 CREATE TABLE spaces (
@@ -26,6 +28,15 @@ CREATE TABLE users (
   password text
 );
 
+CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
+CREATE TABLE bookings (
+  id SERIAL PRIMARY KEY,
+  space_id int,
+  date_booked date,
+  userid_booker int,
+  userid_approver int
+);
+
 -- Finally, we add any records that are needed for the tests to run
 
 INSERT INTO spaces (name, booking_date, location, price, description, user_id) VALUES ('Wizarding Cupboard', '2024-05-12', 'London', 50.00, 'A cosy room under the stairs. Comes with complementary spiders.', 1);
@@ -36,4 +47,8 @@ INSERT INTO spaces (name, booking_date, location, price, description, user_id) V
 INSERT INTO users (username, name, password) VALUES ('mrs_dursley', 'Petunia Dursley', 'hatemynephew123');
 INSERT INTO users (username, name, password) VALUES ('ratatouille', 'Remy Rat', 'kissthecook');
 INSERT INTO users (username, name, password) VALUES ('montoya', 'Inigo Montoya', 'prepare2die');
+
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver) VALUES (4, '2024-07-12', 1, 3);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver) VALUES (3, '2024-07-12', 2, 3);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver) VALUES (2, '2024-07-12', 1, 2);
 

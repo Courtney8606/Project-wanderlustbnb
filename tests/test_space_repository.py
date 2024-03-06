@@ -62,4 +62,3 @@ def test_update_space(db_connection):
         Space(4, 'Mi Casa', datetime.date(2024, 7, 12), 'Madrid', 45.50, 'Es tu Casa.', 3),
         Space(1, 'Cupboard under the stairs', datetime.date(2024, 5, 12), 'London', 50.00, 'A cosy room under the stairs. Comes with complementary spiders.', 1)
     ]
-
