@@ -1,8 +1,13 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, jsonify, request, render_template, url_for
+from lib import space_repository
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import Space, SpaceRepository
 from lib.booking_repository import BookingRepository
+from lib.user_repository import UserRepository
+from lib.user import User
+from flask import redirect
+
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -48,12 +53,50 @@ def get_successful_booking(space_id):
     space = space_repository.find(space_id) # assuming the method is called #find
     return render_template('booking/success.html', space=space) # page that says 'your booking at [SPACE] has been successful!
 
+
 @app.route('/user/<int:user_id>/requests', methods=['GET'])
 def get_unapproved_bookings(user_id):
     connection = get_flask_database_connection(app)
     booking_repository = BookingRepository(connection)
     unapproved = booking_repository.unapproved_bookings(user_id)
     return render_template('requests.html', unapproved=unapproved)
+
+
+# login page
+@app.route('/login', methods=['GET'])
+def get_login_page():
+    return render_template('login.html', message="Login")
+
+@app.route('/login', methods=['POST']) # type: ignore
+def post_login():
+    connection = get_flask_database_connection(app)
+    space_repository = SpaceRepository(connection)
+    username = request.form['username'] # this 
+    password = request.form['password']
+    
+    
+# signup page
+@app.route('/signup', methods=['GET'])
+def get_signup_page():
+    return render_template('signup.html')
+    
+
+
+
+@app.route('/signup', methods=['POST'])
+def post_signup_page():
+    connection = get_flask_database_connection(app) # set up the database connection
+    space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
+    if request.method == 'POST':
+        username = request.form['username']
+        name = request.form['name']
+        password = request.form['password']
+        user = User(username, name,  password)
+        return redirect(url_for('login_page'))
+    return render_template('signup.html') 
+        
+    
+    
 
 
 # These lines start the server if you run this file directly
