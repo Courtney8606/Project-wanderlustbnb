@@ -6,17 +6,46 @@ def test_get_all_bookings(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
     repository = BookingRepository(db_connection)
     assert repository.all() == [
-        Booking(1, 4, datetime.date(2024, 7, 12), 1, 3),
-        Booking(2, 3, datetime.date(2024, 7, 12), 2, 3),
-        Booking(3, 2, datetime.date(2024, 7, 12), 1, 2)
+        Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, False),
+        Booking(2, 3, datetime.date(2024, 7, 12), 2, 3, False),
+        Booking(3, 2, datetime.date(2024, 7, 12), 1, 2, True)
     ]
 def test_create_booking(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
     repository = BookingRepository(db_connection)
-    booking = Booking(1, 4, datetime.date(2024, 7, 12), 1, 3)
+    booking = Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, False)
     repository.create(booking)
     Bookings = repository.all()
-    assert Bookings[-1] == Booking(4, 4, datetime.date(2024, 7, 12), 1, 3)
+    assert Bookings[-1] == Booking(4, 4, datetime.date(2024, 7, 12), 1, 3, False)
+
+def test_unapproved_bookings(db_connection):
+    db_connection.seed("seeds/spaces_table.sql")
+    repository = BookingRepository(db_connection)
+    result = repository.unapproved_bookings()
+    assert result == [
+        Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, False),
+        Booking(2, 3, datetime.date(2024, 7, 12), 2, 3, False)
+    ]
+
+def test_approved_bookings(db_connection):
+    db_connection.seed("seeds/spaces_table.sql")
+    repository = BookingRepository(db_connection)
+    result = repository.approved_bookings()
+    assert result == [
+        Booking(3, 2, datetime.date(2024, 7, 12), 1, 2, True)
+    ]
+
+def test_update_approval(db_connection):
+    db_connection.seed("seeds/spaces_table.sql")
+    repository = BookingRepository(db_connection)
+    booking = Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, True)
+    repository.update_approval(booking)
+    result = repository.approved_bookings()
+    assert result == [
+        Booking(3, 2, datetime.date(2024, 7, 12), 1, 2, True),
+        Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, True)
+    ]
+
 # """
 # When I call .find() on the SpaceRepository with an id
 # I get the space corresponding to that id back
@@ -33,8 +62,8 @@ def test_delete_booking(db_connection):
     repository.delete(1)
     bookings = repository.all()
     assert bookings == [
-        Booking(2, 3, datetime.date(2024, 7, 12), 2, 3),
-        Booking(3, 2, datetime.date(2024, 7, 12), 1, 2)
+        Booking(2, 3, datetime.date(2024, 7, 12), 2, 3, False),
+        Booking(3, 2, datetime.date(2024, 7, 12), 1, 2, True)
     ]
 
 # def test_update_space(db_connection):

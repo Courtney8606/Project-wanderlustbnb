@@ -34,7 +34,8 @@ CREATE TABLE bookings (
   space_id int,
   date_booked date,
   userid_booker int,
-  userid_approver int
+  userid_approver int,
+  approved bool DEFAULT False
 );
 
 -- Finally, we add any records that are needed for the tests to run
@@ -48,7 +49,7 @@ INSERT INTO users (username, name, password) VALUES ('mrs_dursley', 'Petunia Dur
 INSERT INTO users (username, name, password) VALUES ('ratatouille', 'Remy Rat', 'kissthecook');
 INSERT INTO users (username, name, password) VALUES ('montoya', 'Inigo Montoya', 'prepare2die');
 
-INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver) VALUES (4, '2024-07-12', 1, 3);
-INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver) VALUES (3, '2024-07-12', 2, 3);
-INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver) VALUES (2, '2024-07-12', 1, 2);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved) VALUES (4, '2024-07-12', 1, 3, False);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved) VALUES (3, '2024-07-12', 2, 3, False);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved) VALUES (2, '2024-07-12', 1, 2, True);
 
