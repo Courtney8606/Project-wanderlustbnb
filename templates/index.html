@@ -45,14 +45,17 @@
             <button class="specify-button">See available spaces</button>
         </form>
    
-      {% for space in spaces %}
+     
       
       <div class="space">
+      
+      {% for space in spaces %}
+
         <div class="column">
           <div class="card">
             <img
               class="space-image"
-              src="static/images/house1.jpg"
+              src="static/images/house{{space.id}}.jpg"
               alt="House1"
               style="width: 100%"
             />
@@ -66,8 +69,10 @@
             </div>
           </div>
         </div>
+      {% endfor %}
+      </div>
 
-        {% endfor %}
+        
 
         
     </body>
