@@ -66,14 +66,16 @@ def approve_booking():
 
 
 # Create a new booking request
-@app.route('/spaces/space_id', methods=['POST'])
-def create_booking():
+@app.route('/spaces/booking', methods=['POST'])
+def create_booking(space_id):
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
+    user_repository = UserRepository(connection)
     date_booked = request.form['date_booked']
-    space_id = request.form['space_id']
     userid_approver = request.form['approver_id']
-    userid_booker = 1
+    username = request.form['session.get("user")']
+    user = user_repository.find_by_username(username)
+    userid_booker = user.id
     approved = False
     booking = Booking(None, space_id, date_booked, userid_booker, userid_approver, approved)
     repository.create(booking)
