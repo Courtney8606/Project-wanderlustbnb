@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, request, render_template, url_for
+from flask import Flask, jsonify, request, render_template, url_for, redirect
 from lib import space_repository
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import Space, SpaceRepository
@@ -8,7 +8,6 @@ from lib.user_repository import UserRepository
 from lib.booking import Booking
 from lib.user import User
 from lib.space import Space
-from flask import redirect
 
 
 # Create a new Flask app
@@ -85,17 +84,18 @@ def get_unapproved_bookings(user_id):
 def get_login_page():
     return render_template('login.html')
 
-@app.route('/login', methods=['POST']) # type: ignore
+@app.route('/login', methods=['POST'])
 def post_login():
     connection = get_flask_database_connection(app)
     user_repository = UserRepository(connection)
     username = request.form['username']
     password = request.form['password']
-    status = user_repository.login(username, password)
-    if status == True:
-        return 'wow'
+    if user_repository.login(username, password) == False:
+        error_message = 'Username or password do not match, please try again.'
+        signup_prompt = "Don't have an account? Sign up!"
+        return render_template('login.html', error_message=error_message, signup_prompt=signup_prompt)
     else:
-        return 'ohoooo'
+        return render_template('login_success.html', username=username)
     
     
 # signup page
