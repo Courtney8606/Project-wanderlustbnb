@@ -58,9 +58,9 @@ def get_login_page():
 
 @app.route('/login', methods=['POST']) # type: ignore
 def post_login():
-    connection = get_flask_database_connection(app)
-    space_repository = SpaceRepository(connection)
-    username = request.form['username'] # this 
+    connection = get_flask_database_connection(app) # set up the database connection
+    repository = UserRepository(connection) # this is a placeholder waiting for the user repository class
+    username = request.form['username'] 
     password = request.form['password']
     
     
@@ -75,12 +75,11 @@ def get_signup_page():
 @app.route('/signup', methods=['POST'])
 def post_signup_page():
     connection = get_flask_database_connection(app) # set up the database connection
-    space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
+    repository = UserRepository(connection) # this is a placeholder waiting for the user repository class
     if request.method == 'POST':
         username = request.form['username']
         name = request.form['name']
         password = request.form['password']
-        user = User(username, name,  password)
         return redirect(url_for('login_page'))
     return render_template('signup.html') 
         
