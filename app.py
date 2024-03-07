@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, request, render_template, url_for, redirect
+from flask import Flask, jsonify, request, render_template, url_for, session, redirect
 from lib import space_repository
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import Space, SpaceRepository
@@ -10,8 +10,10 @@ from lib.user import User
 from lib.space import Space
 
 
+
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = "tangerine"
 
 # == Your Routes Here ==
 
@@ -80,6 +82,7 @@ def create_booking():
     return render_template('successfulbooking.html')
 
 
+
 # login page
 @app.route('/login', methods=['GET'])
 def get_login_page():
@@ -139,13 +142,14 @@ def post_signup_page():
     name = request.form['name']
     password = request.form['password']
     repeat_password = request.form['repeat_password']
+    user = request.form["username"]
+    session["user"] = user
     if password != repeat_password:
         return render_template('signup.html', error_message='Passwords do not match. Please try again.')
     else:
         user = User(None, username, name, password)
         user_repository.create(user)
         return render_template('signup_success.html', username=username)
-
 
 
 # These lines start the server if you run this file directly
