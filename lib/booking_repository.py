@@ -38,8 +38,8 @@ class BookingRepository():
             bookings.append(row)
         return bookings
 
-    def update_approval(self, booking):
-        self._connection.execute('UPDATE bookings SET approved = %s WHERE id = %s', [booking.approved, booking.id])
+    def update_approval(self, booking_id):
+        self._connection.execute('UPDATE bookings SET approved = True WHERE id = %s', [booking_id])
 
 
     # def find(self, id):
