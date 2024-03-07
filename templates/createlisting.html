@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a listing</title>
+</head>
+<body>
+    <form action="/spaces/new" method="POST">
+        {% if errors %}
+            <div class="new-album-errors">Your submission contained errors: {{errors}}</div>
+        {% endif %}
+        <p>
+            <label for="name">Name</label><br>
+            <input type="text" name="name" id="name">
+        </p>
+        <p>
+            <label for="location">Location</label><br>
+            <input type="text" name="location" id="location">
+        </p>
+        <p>
+            <label for="description">Description</label><br>
+            <input type="text" name="description" id="description">
+        </p>
+        <p>
+            <label for="price">Price per night</label><br>
+            <input type="text" name="price" id="price">
+        </p>
+        <p>
+            <label for="booking_start">booking date (DD/MM/YY)</label><br>
+            <input type="text" name="booking-start" id="booking-start">
+        </p>
+        <!--<p>
+            <label for="booking_start">Available from (DD/MM/YY)</label><br>
+            <input type="text" name="booking-start" id="booking-start">
+        </p>
+        <p>
+            <label for="booking_end">Available to (DD/MM/YY)</label><br>
+            <input type="text" name="booking-end" id="booking-end">
+        </p>-->
+        <p>
+        <input type="submit" value="List my space">
+        </p>
+    </form>
+</body>
+</html>

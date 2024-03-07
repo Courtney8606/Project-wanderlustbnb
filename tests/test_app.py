@@ -56,3 +56,25 @@ def test_get_individual_space_2(page, test_web_address, db_connection, space_id=
 #     album_info = page.locator('p')
 #     expect(header).to_have_text('Doolittle')
 #     expect(album_info).to_have_text('Release year: 1989\nArtist: Pixies')
+    
+def test_post_a_listing(db_connection, web_client):
+    db_connection.seed("seeds/spaces_table.sql")
+    post_response = web_client.post("spaces/new", data={
+        'name': 'Test',
+        'booking_date': '2024-04-10',
+        'location': 'Canterbury',
+        'price': '48.0',
+        'description': 'A cosy test under the tests. Comes with complementary tests.',
+        'user_id': '1'
+    })
+    assert post_response.status_code == 200
+    assert post_response.data.decode('utf-8') == ""
+
+    get_response = web_client.get("/spaces")
+    assert get_response.status_code == 200
+    assert get_response.data.decode('utf-8') == "" \
+        "Space('Wizarding Cupboard', '2024-05-12', 'London', 50.00, 'A cosy room under the stairs. Comes with complementary spiders.', 1)\n" \
+        "Space('Amore Penthouse', '2024-07-12', 'Paris', 87.00, 'Within view of the Eiffel Tower, this penthouse is your parisian dream.', 2)\n" \
+        "Space('Paella Place', '2024-07-14', 'Madrid', 31.59, 'Eat paella and sleep.', 3)\n" \
+        "Space('Mi Casa', '2024-07-12', 'Madrid', 45.50, 'Es tu Casa.', 3)\n"
+

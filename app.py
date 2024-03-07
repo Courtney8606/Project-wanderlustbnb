@@ -98,7 +98,31 @@ def post_login():
 def get_signup_page():
     return render_template('signup.html')
     
-
+#create space
+@app.route('/spaces/new', methods=['POST'])
+def create_album():
+    connection = get_flask_database_connection(app)
+    repository_spaces = SpaceRepository(connection)
+    name = request.form['name']
+    loaction = request.form['location']
+    description = request.form['description']
+    price = request.form['price']
+    booking_date = request.form['booking_date']
+    if booking_date == "":
+        errors = "Please ensure all fields are filled in"
+        return render_template('albums/new_album.html', errors=errors)
+    artist = repository_artists.find_by_name(artist_name)
+    if not artist.is_valid():
+        return render_template('artists/new_artist_error.html')
+    else:
+        artist_id = artist.id
+        album = Album(None, title, release_year, artist_id)
+        if not album.is_valid():
+            errors = album.generate_errors()
+            return render_template('albums/new_album.html', errors=errors)
+        repository_albums.create(album)
+        return redirect(f"/albums/{album.id}")
+    return 
 
 
 @app.route('/signup', methods=['POST'])
