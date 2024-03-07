@@ -4,9 +4,9 @@
         <title>Login</title>
     </head>
     <body>
-        <h1>{{Login}}</h1>
+        <h1>Login</h1>
         
-        <form action="/login" method="POST">
+        <form action="" method="POST">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username">
             
@@ -15,5 +15,9 @@
             
             <input type="submit" value="Login">
         </form>
+        <p>
+            {{error_message}} <br>
+            {{signup_prompt}}
+        </p>
     </body>
     </html>

@@ -8,7 +8,6 @@ from lib.user_repository import UserRepository
 from lib.booking import Booking
 from lib.user import User
 from lib.space import Space
-from flask import redirect
 
 
 # Create a new Flask app
@@ -23,9 +22,10 @@ app = Flask(__name__)
 @app.route('/index', methods=['GET'])
 def get_index():
     connection = get_flask_database_connection(app)
-    space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
+    space_repository = SpaceRepository(connection)
     spaces = space_repository.all()
     return render_template('index.html', spaces=spaces)
+
 
 # show all properties on specific date
 # datetime scares me man
@@ -34,8 +34,8 @@ def get_index():
 @app.route('/spaces/<int:space_id>', methods=['GET'])
 def get_space_by_id(space_id):
     connection = get_flask_database_connection(app)
-    space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
-    space = space_repository.find(space_id) # assuming the method is called #find
+    space_repository = SpaceRepository(connection)
+    space = space_repository.find(space_id)
     return render_template('spaces/space.html', space=space)
     
 # # booking has been successful page
@@ -83,14 +83,20 @@ def create_booking():
 # login page
 @app.route('/login', methods=['GET'])
 def get_login_page():
-    return render_template('login.html', message="Login")
+    return render_template('login.html')
 
-@app.route('/login', methods=['POST']) # type: ignore
+@app.route('/login', methods=['POST'])
 def post_login():
     connection = get_flask_database_connection(app)
-    space_repository = SpaceRepository(connection)
-    username = request.form['username'] # this 
+    user_repository = UserRepository(connection)
+    username = request.form['username']
     password = request.form['password']
+    if user_repository.login(username, password) == False:
+        error_message = 'Username or password do not match, please try again.'
+        signup_prompt = "Don't have an account? Sign up!"
+        return render_template('login.html', error_message=error_message, signup_prompt=signup_prompt)
+    else:
+        return render_template('login_success.html', username=username)
     
     
 # signup page
@@ -127,18 +133,19 @@ def create_album():
 
 @app.route('/signup', methods=['POST'])
 def post_signup_page():
-    connection = get_flask_database_connection(app) # set up the database connection
-    space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
-    if request.method == 'POST':
-        username = request.form['username']
-        name = request.form['name']
-        password = request.form['password']
-        user = User(username, name,  password)
-        return redirect(url_for('login_page'))
-    return render_template('signup.html') 
-        
-    
-    
+    connection = get_flask_database_connection(app) 
+    user_repository = UserRepository(connection)
+    username = request.form['username']
+    name = request.form['name']
+    password = request.form['password']
+    repeat_password = request.form['repeat_password']
+    if password != repeat_password:
+        return render_template('signup.html', error_message='Passwords do not match. Please try again.')
+    else:
+        user = User(None, username, name, password)
+        user_repository.create(user)
+        return render_template('signup_success.html', username=username)
+
 
 
 # These lines start the server if you run this file directly
