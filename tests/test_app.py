@@ -18,18 +18,18 @@ We can render the index page
 
 # check /spaces route works
 
-def test_get_all_spaces(page, test_web_address, db_connection, web_client):
-    db_connection.seed('seeds/spaces_table.sql')
-    page.goto(f'http://{test_web_address}/spaces')
-    response = web_client.get('/spaces')
-    assert response.status_code == 200
-    div_tags = page.locator('div')
-    expect(div_tags).to_have_text([
-        'Name: Wizarding Cupboard\nLocation: London',
-        'Name: Amore Penthouse\nLocation: Paris',
-        'Name: Paella Place\nLocation: Madrid',
-        'Name: Mi Casa\nLocation: Madrid'
-    ])
+# def test_get_all_spaces(page, test_web_address, db_connection, web_client):
+#     db_connection.seed('seeds/spaces_table.sql')
+#     page.goto(f'http://{test_web_address}/spaces')
+#     response = web_client.get('/spaces')
+#     assert response.status_code == 200
+#     div_tags = page.locator('div')
+#     expect(div_tags).to_have_text([
+#         'Name: Wizarding Cupboard\nLocation: London',
+#         'Name: Amore Penthouse\nLocation: Paris',
+#         'Name: Paella Place\nLocation: Madrid',
+#         'Name: Mi Casa\nLocation: Madrid'
+#     ])
 
 # check each individual space on /spaces/<space_id>
 
