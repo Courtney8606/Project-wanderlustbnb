@@ -59,7 +59,7 @@ def test_get_individual_space_2(page, test_web_address, db_connection, space_id=
     
 def test_post_a_listing(db_connection, web_client):
     db_connection.seed("seeds/spaces_table.sql")
-    post_response = web_client.post("/albums", data={
+    post_response = web_client.post("spaces/new", data={
         'name': 'Test',
         'booking_date': '2024-04-10',
         'location': 'Canterbury',
