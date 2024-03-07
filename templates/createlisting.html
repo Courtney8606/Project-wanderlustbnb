@@ -6,10 +6,7 @@
     <title>Create a listing</title>
 </head>
 <body>
-    <form action="/spaces/new" method="POST">
-        {% if errors %}
-            <div class="new-album-errors">Your submission contained errors: {{errors}}</div>
-        {% endif %}
+    <form action="/index" method="POST">
         <p>
             <label for="name">Name</label><br>
             <input type="text" name="name" id="name">
@@ -19,16 +16,12 @@
             <input type="text" name="location" id="location">
         </p>
         <p>
-            <label for="description">Description</label><br>
-            <input type="text" name="description" id="description">
-        </p>
-        <p>
             <label for="price">Price per night</label><br>
             <input type="text" name="price" id="price">
         </p>
         <p>
-            <label for="booking_start">booking date (DD/MM/YY)</label><br>
-            <input type="text" name="booking-start" id="booking-start">
+            <label for="description">Description</label><br>
+            <input type="text" name="description" id="description">
         </p>
         <!--<p>
             <label for="booking_start">Available from (DD/MM/YY)</label><br>
@@ -39,7 +32,7 @@
             <input type="text" name="booking-end" id="booking-end">
         </p>-->
         <p>
-        <input type="submit" value="List my space">
+        <input type="submit" value="List my space" href="index.html">
         </p>
     </form>
 </body>

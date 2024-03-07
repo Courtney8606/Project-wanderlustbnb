@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, request, render_template, url_for
+from flask import Flask, jsonify, request, render_template, url_for, redirect
 from lib import space_repository
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import Space, SpaceRepository
@@ -99,21 +99,24 @@ def get_signup_page():
     return render_template('signup.html')
     
 #create space
-@app.route('/spaces/new', methods=['POST'])
+@app.route('/new', methods=['GET'])
+def get_listing_page():
+    return render_template('createlisting.html')
+
+@app.route('/index', methods=['POST'])
 def create_a_listing():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
     name = request.form['name']
     description = request.form['description']
     price = request.form['price']
-    booking_date = request.form['booking_start']
     location = request.form['location']
     #booking_start = request.form['booking_start']
     #booking_end = request.form['booking_end']
-    user_id = space.user_id
-    space = Space(name, booking_date, location, price, description, user_id)
+    user_id = 1
+    space = Space(None, name, location, price, description, user_id)
     space_repository.create(space)
-    return 
+    return render_template('/index')
 
 
 @app.route('/signup', methods=['POST'])
