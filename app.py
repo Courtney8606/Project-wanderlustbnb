@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, request, render_template, url_for
+from flask import Flask, jsonify, request, render_template, url_for, session
 from lib import space_repository
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import Space, SpaceRepository
@@ -7,8 +7,10 @@ from lib.user_repository import UserRepository
 from lib.user import User
 from flask import redirect
 
+
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = "tangerine"
 
 # == Your Routes Here ==
 
@@ -51,6 +53,7 @@ def get_successful_booking(space_id):
     space = space_repository.find(space_id) # assuming the method is called #find
     return render_template('booking/success.html', space=space) # page that says 'your booking at [SPACE] has been successful!
 
+
 # login page
 @app.route('/login', methods=['GET'])
 def get_login_page():
@@ -62,6 +65,27 @@ def post_login():
     repository = UserRepository(connection) # this is a placeholder waiting for the user repository class
     username = request.form['username'] 
     password = request.form['password']
+    if request.method == "POST":
+        user = request.form["username"]
+        session["user"] = user
+        return redirect(url_for("user"))
+    else:
+        return render_template("login.html")
+
+@app.route("/user")
+def user():
+    if "user" in session:
+        user = session["user"]
+        return f"<h1>{user}</h1>"
+    else:
+        return redirect(url_for("post_login"))
+
+    
+# Route for the successful login
+@app.route('/login/success')
+def login_success():
+    return 'Login Successful!'
+    
     
     
 # signup page
@@ -78,12 +102,17 @@ def post_signup_page():
     repository = UserRepository(connection) # this is a placeholder waiting for the user repository class
     if request.method == 'POST':
         username = request.form['username']
-        name = request.form['name']
         password = request.form['password']
-        return redirect(url_for('login_page'))
-    return render_template('signup.html') 
-        
+        user = request.form["username"]
+        session["user"] = user
+        return redirect(url_for("user"))
+    else:
+        return render_template("signup.html")
     
+# Route for the successful page
+@app.route('/signup/success')
+def signup_success():
+    return 'Sign Up Successful!'
     
 
 # These lines start the server if you run this file directly

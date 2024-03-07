@@ -56,3 +56,34 @@ def test_get_individual_space_2(page, test_web_address, db_connection, space_id=
 #     album_info = page.locator('p')
 #     expect(header).to_have_text('Doolittle')
 #     expect(album_info).to_have_text('Release year: 1989\nArtist: Pixies')
+
+
+# check signup page is loading correctly
+def test_signup_page_loads_correctly(web_client, db_connection):
+    db_connection.seed('seeds/spaces_table.sql')
+    response = web_client.get('/signup')
+    assert response.status_code == 200
+    assert b'Sign Up' in response.data
+
+def test_signup_page_renders_correctly(web_client, db_connection):
+    db_connection.seed('seeds/spaces_table.sql')
+    response = web_client.get('/signup')
+    assert response.status_code == 200
+    assert b'Sign Up' in response.data
+    assert b'Username' in response.data
+    assert b'Password' in response.data
+
+def test_signup_page_has_correct_form_elements(web_client, db_connection):
+    db_connection.seed('seeds/spaces_table.sql')
+    response = web_client.get('/signup')
+    assert b'Sign Up' in response.data
+    assert b'Username' in response.data
+    assert b'Password' in response.data
+
+def test_signup_page_with_username_and_password(web_client, db_connection):
+    db_connection.seed('seeds/spaces_table.sql')
+    response = web_client.get('/signup?name=Inigo Montoya,password=prepare2die')
+    assert response.status_code == 200
+    assert b'Sign Up' in response.data
+    assert b'Username' in response.data
+    assert b'Password' in response.data
