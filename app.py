@@ -94,6 +94,7 @@ def post_login():
     user_repository = UserRepository(connection)
     username = request.form['username']
     password = request.form['password']
+    session['user'] = username
     if user_repository.login(username, password) == False:
         error_message = 'Username or password do not match, please try again.'
         signup_prompt = "Don't have an account? Sign up!"
@@ -102,10 +103,7 @@ def post_login():
         return render_template('login_success.html', username=username)
     
     
-# signup page
-@app.route('/signup', methods=['GET'])
-def get_signup_page():
-    return render_template('signup.html')
+
     
 #create space
 @app.route('/spaces/new', methods=['POST'])
@@ -133,6 +131,10 @@ def create_album():
         return redirect(f"/albums/{album.id}")
     return 
 
+# signup page
+@app.route('/signup', methods=['GET'])
+def get_signup_page():
+    return render_template('signup.html')
 
 @app.route('/signup', methods=['POST'])
 def post_signup_page():
@@ -142,8 +144,8 @@ def post_signup_page():
     name = request.form['name']
     password = request.form['password']
     repeat_password = request.form['repeat_password']
-    user = request.form["username"]
-    session["user"] = user
+    session_user = request.form["username"]
+    session["user"] = session_user
     if password != repeat_password:
         return render_template('signup.html', error_message='Passwords do not match. Please try again.')
     else:
