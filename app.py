@@ -19,7 +19,7 @@ app = Flask(__name__)
 @app.route('/index', methods=['GET'])
 def get_index():
     connection = get_flask_database_connection(app)
-    space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
+    space_repository = SpaceRepository(connection)
     spaces = space_repository.all()
     return render_template('index.html', spaces=spaces)
 
@@ -27,7 +27,7 @@ def get_index():
 @app.route('/spaces', methods=['GET'])
 def get_all_spaces():
     connection = get_flask_database_connection(app)
-    space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
+    space_repository = SpaceRepository(connection)
     spaces = space_repository.all()
     return render_template('spaces/all.html', spaces=spaces) # all.html still pending
 
@@ -39,8 +39,8 @@ def get_all_spaces():
 @app.route('/spaces/<int:space_id>', methods=['GET'])
 def get_space_by_id(space_id):
     connection = get_flask_database_connection(app)
-    space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
-    space = space_repository.find(space_id) # assuming the method is called #find
+    space_repository = SpaceRepository(connection)
+    space = space_repository.find(space_id)
     return render_template('spaces/space.html', space=space)
     
 # booking has been successful page
@@ -54,14 +54,19 @@ def get_successful_booking(space_id):
 # login page
 @app.route('/login', methods=['GET'])
 def get_login_page():
-    return render_template('login.html', message="Login")
+    return render_template('login.html')
 
 @app.route('/login', methods=['POST']) # type: ignore
 def post_login():
     connection = get_flask_database_connection(app)
-    space_repository = SpaceRepository(connection)
-    username = request.form['username'] # this 
+    user_repository = UserRepository(connection)
+    username = request.form['username']
     password = request.form['password']
+    status = user_repository.login(username, password)
+    if status == True:
+        return 'wow'
+    else:
+        return 'ohoooo'
     
     
 # signup page

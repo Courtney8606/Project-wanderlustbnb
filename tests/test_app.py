@@ -48,11 +48,3 @@ def test_get_individual_space_2(page, test_web_address, db_connection, space_id=
     expect(header).to_have_text('Amore Penthouse')
     expect(space_info).to_have_text('Location: Paris\nDescription: Within view of the Eiffel Tower, this penthouse is your parisian dream.\nPrice per night: 87.0')
 
-
-# def test_get_album_1(page, test_web_address, db_connection, album_id=1):
-#     db_connection.seed('seeds/music_library.sql')
-#     page.goto(f'http://{test_web_address}/albums/{album_id}')
-#     header = page.locator('h1')
-#     album_info = page.locator('p')
-#     expect(header).to_have_text('Doolittle')
-#     expect(album_info).to_have_text('Release year: 1989\nArtist: Pixies')
