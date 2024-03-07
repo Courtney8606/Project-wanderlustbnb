@@ -3,9 +3,13 @@ from flask import Flask, jsonify, request, render_template, url_for
 from lib import space_repository
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import Space, SpaceRepository
+from lib.booking_repository import BookingRepository
 from lib.user_repository import UserRepository
+from lib.booking import Booking
 from lib.user import User
+from lib.space import Space
 from flask import redirect
+
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -51,6 +55,31 @@ def get_successful_booking(space_id):
     space = space_repository.find(space_id) # assuming the method is called #find
     return render_template('booking/success.html', space=space) # page that says 'your booking at [SPACE] has been successful!
 
+# User bookings reviewed by approver
+@app.route('/users/<int:user_id>/requests', methods=['GET'])
+def get_unapproved_bookings(user_id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    unapproved = booking_repository.unapproved_bookings(user_id)
+    return render_template('requests.html', unapproved=unapproved)
+
+# # Create a new booking request
+# @app.route('/spaces/<int:space_id>', methods=['POST'])
+# def create_booking(space_id):
+#     connection = get_flask_database_connection(app)
+#     repository = BookingRepository(connection)
+#     date_booked = request.form['date_booked']
+
+#     space = Space(space_id, name, location, price, description, user_id)
+    
+#     userid_booker =
+#     userid_approver =
+#     approved = False
+#     booking = Booking(None, space_id, date_booked, userid_booker, userid_approver, approved)
+#     repository.create(booking)
+#     # return redirect(f"/artists/{artist.id}")
+
+
 # login page
 @app.route('/login', methods=['GET'])
 def get_login_page():
@@ -91,6 +120,7 @@ def post_signup_page():
         
     
     
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
