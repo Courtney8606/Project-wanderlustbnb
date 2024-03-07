@@ -41,8 +41,30 @@
                     };
                 }
             });
-        });
+            // Submit form data via AJAX
+            $('#bookingForm').submit(function(event){
+                        event.preventDefault(); // Prevent default form submission
+                        var formData = $(this).serialize(); // Serialize form data
+                        var spaceId = $('#spaceId').val(); // Retrieve space ID from hidden field
+                        $.ajax({
+                            url: '/spaces/<space_id',
+                            type: 'POST',
+                            data: formData,
+                            success: function(response) {
+                                // Handle success response
+                                console.log(response);
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle error
+                                console.error(error);
+                            }
+                        });
+                    });
+                });
       </script>
+
+      
+
 
         <div class="navbar">
             <div>
@@ -68,10 +90,14 @@
         </p>
 
         <div class="container">
-          <h1>Booking Dates</h1>
-          <div class="calendar">
-            <input type="text" id="datepicker">
-          </div>
+          <h1>Booking Form</h1>
+          <form id="bookingForm">
+              <div class="form-group">
+                  <label for="datepicker">Select Date:</label>
+                  <input type="text" class="form-control" id="datepicker" name="date_booked">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
         </div>
       
         <!-- Include Bootstrap Bundle JavaScript -->
