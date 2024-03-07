@@ -47,7 +47,7 @@
                         var formData = $(this).serialize(); // Serialize form data
                         var spaceId = $('#spaceId').val(); // Retrieve space ID from hidden field
                         $.ajax({
-                            url: '/spaces/<space_id',
+                            url: '/spaces/<space_id>',
                             type: 'POST',
                             data: formData,
                             success: function(response) {
@@ -97,7 +97,15 @@
                   <input type="text" class="form-control" id="datepicker" name="date_booked">
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
+              <input type="hidden" name="space_id" value="{{space.id}}">
+              <input type="hidden" name="approver_id" value="{{space.user_id}}">
           </form>
+        </div>
+
+        <div>
+            <form class = "grid" action ="/spaces/space_id" method = "POST">
+                <input type="Submit" class="file_submit">
+            </form>
         </div>
       
         <!-- Include Bootstrap Bundle JavaScript -->
