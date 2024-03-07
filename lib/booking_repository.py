@@ -37,6 +37,13 @@ class BookingRepository():
             row = Booking(row["id"], row["space_id"], row["date_booked"], row["userid_booker"], row["userid_approver"], row["approved"])
             bookings.append(row)
         return bookings
+    
+    def approved_bookings_by_date_and_userid_approver(self):
+        rows = self._connection.execute('SELECT * from bookings WHERE approved = True AND userid_approver = %s', [])
+        bookings = []
+        for row in rows:
+            bookings.append(row["date_booked"])
+        return bookings
 
     def update_approval(self, booking_id):
         self._connection.execute('UPDATE bookings SET approved = True WHERE id = %s', [booking_id])

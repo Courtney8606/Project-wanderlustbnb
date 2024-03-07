@@ -41,26 +41,8 @@
                     };
                 }
             });
-            // Submit form data via AJAX
-            $('#bookingForm').submit(function(event){
-                        event.preventDefault(); // Prevent default form submission
-                        var formData = $(this).serialize(); // Serialize form data
-                        var spaceId = $('#spaceId').val(); // Retrieve space ID from hidden field
-                        $.ajax({
-                            url: '/spaces/<space_id>',
-                            type: 'POST',
-                            data: formData,
-                            success: function(response) {
-                                // Handle success response
-                                console.log(response);
-                            },
-                            error: function(xhr, status, error) {
-                                // Handle error
-                                console.error(error);
-                            }
-                        });
-                    });
-                });
+
+        });
       </script>
 
       
@@ -99,11 +81,12 @@
               <button type="submit" class="btn btn-primary">Submit</button>
               <input type="hidden" name="space_id" value="{{space.id}}">
               <input type="hidden" name="approver_id" value="{{space.user_id}}">
+              <input type="hidden" name="approver_id" value="{{session.get('user')}}">
           </form>
         </div>
 
         <div>
-            <form class = "grid" action ="/spaces/space_id" method = "POST">
+            <form class = "grid" action ="/spaces/booking" method = "POST">
                 <input type="Submit" class="file_submit">
             </form>
         </div>
