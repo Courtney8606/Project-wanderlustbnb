@@ -48,3 +48,20 @@ def test_get_individual_space_2(page, test_web_address, db_connection, space_id=
     expect(header).to_have_text('Amore Penthouse')
     expect(space_info).to_have_text('Location: Paris\nDescription: Within view of the Eiffel Tower, this penthouse is your parisian dream.\nPrice per night: 87.0')
 
+def test_login_page(page, test_web_address, db_connection):
+        db_connection.seed('seeds/spaces_table.sql')
+        page.goto(f'http://{test_web_address}/login')
+        page.fill("input[name='username']", "montoya")
+        page.fill("input[name='password']", "prepare2die")
+        page.click("input[type='submit']")
+        welcome_message = page.locator('h3')
+        expect(welcome_message).to_have_text('Welcome, montoya, you have successfully logged in.')
+
+def test_failed_login(page, test_web_address, db_connection):
+    db_connection.seed('seeds/spaces_table.sql')
+    page.goto(f'http://{test_web_address}/login')
+    page.fill("input[name='username']", "montoya")
+    page.fill("input[name='password']", "prepare2live")
+    page.click("input[type='submit']")
+    error_message = page.locator('p')
+    expect(error_message).to_have_text("Username or password do not match, please try again.\nDon't have an account? Sign up!")
