@@ -10,14 +10,7 @@
 
     <body>
 
-       {% for booking in unapproved %}
-        <form class = "grid" action ="/approvebooking" method = "POST">
-        <p>{{booking}}</p>
-        <input type="hidden" name="booking_id" value="{{booking.id}}">
-        <input type="hidden" name="approver_id" value="{{booking.userid_approver}}">
-        <input type="Submit" class="file_submit">
-        </form>
-        {% endfor %}
+      <h1>SUCCESS!</h1>
 
     </body>
 
