@@ -108,18 +108,19 @@ def get_signup_page():
 
 @app.route('/signup', methods=['POST'])
 def post_signup_page():
-    connection = get_flask_database_connection(app) # set up the database connection
-    space_repository = SpaceRepository(connection) # this is a placeholder waiting for the space repository class
-    if request.method == 'POST':
-        username = request.form['username']
-        name = request.form['name']
-        password = request.form['password']
-        user = User(username, name,  password)
-        return redirect(url_for('login_page'))
-    return render_template('signup.html') 
-        
-    
-    
+    connection = get_flask_database_connection(app) 
+    user_repository = UserRepository(connection)
+    username = request.form['username']
+    name = request.form['name']
+    password = request.form['password']
+    repeat_password = request.form['repeat_password']
+    if password != repeat_password:
+        return render_template('signup.html', error_message='Passwords do not match. Please try again.')
+    else:
+        user = User(None, username, name, password)
+        user_repository.create(user)
+        return render_template('signup_success.html', username=username)
+
 
 
 # These lines start the server if you run this file directly
