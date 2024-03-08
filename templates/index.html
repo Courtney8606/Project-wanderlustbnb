@@ -96,47 +96,32 @@
     </head>
     <body>
 
-      <div class="navbar">
-        <div>
-        <img class="primary-icon" src="static/images/makers-logo.png" class="logo">
-        </div>
+      <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
 
-        <ul class="nav-list" id="navi-list">
-          <li class="list-item"><a href="spaces">Spaces</a></li>
-          <li class="list-item"><a href="requests.html">Requests</a></li>
-          <li class="list-item"><a href="list.html">List a space</a></li>
-          <li class="list-item"><a href="signout.html">Signout</a></li>
-          <li class="list-item"><a href="#">{{session.get('user')}}</a></li>
-        </ul>
-      </div>
-  
-      
-  <header data-bs-theme="dark">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">MakersBnB</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Spaces</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/user/requests">Requests</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">List a space</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Sign-Out</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          <img class="primary-icon" src="static/images/makers-logo.png" class="logo">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="nav-list navbar-nav me-auto mb-2 mb-md-0" id="navi-list">
+              <li class="nav-item list-item">
+                <a class="nav-link active" aria-current="page" href="/index">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/spaces">Spaces</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="requests.html">Requests</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/new">List a space</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="signout.html">Signout</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -168,7 +153,7 @@
             <div class="carousel-caption">
               <h1>Host your home.</h1>
               <p>Create a listing to host a space. Join hundreds across Europe.</p>
-              <p><a class="btn btn-lg btn-primary" href="#">List a space</a></p>
+              <p><a class="btn btn-lg btn-primary" href="/new">List a space</a></p>
             </div>
           </div>
         </div>
@@ -223,7 +208,7 @@
           <p style="margin-bottom: 0;">{{space.location}}</p>
           <p style="margin-top: 0;">{{space.price}} per night</p>
           <p>{{space.description}}</p>
-          <p><a class="btn btn-secondary" href="#">Book this space &raquo;</a></p>
+          <p><a class="btn btn-secondary" href="/spaces/{{space.id}}">Book this space &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         {% endfor %}
       </div><!-- /.row -->

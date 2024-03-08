@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask, jsonify, request, render_template, url_for, session, redirect
 from lib import space_repository
 from lib.database_connection import get_flask_database_connection
@@ -120,30 +121,24 @@ def post_login():
 
     
 #create space
-@app.route('/spaces/new', methods=['POST'])
-def create_album():
+@app.route('/new', methods=['GET'])
+def get_listing_page():
+    return render_template('createlisting.html')
+
+@app.route('/index', methods=['POST'])
+def create_a_listing():
     connection = get_flask_database_connection(app)
-    repository_spaces = SpaceRepository(connection)
+    space_repository = SpaceRepository(connection)
     name = request.form['name']
-    loaction = request.form['location']
     description = request.form['description']
     price = request.form['price']
-    booking_date = request.form['booking_date']
-    if booking_date == "":
-        errors = "Please ensure all fields are filled in"
-        return render_template('albums/new_album.html', errors=errors)
-    artist = repository_artists.find_by_name(artist_name)
-    if not artist.is_valid():
-        return render_template('artists/new_artist_error.html')
-    else:
-        artist_id = artist.id
-        album = Album(None, title, release_year, artist_id)
-        if not album.is_valid():
-            errors = album.generate_errors()
-            return render_template('albums/new_album.html', errors=errors)
-        repository_albums.create(album)
-        return redirect(f"/albums/{album.id}")
-    return 
+    location = request.form['location']
+    #booking_start = request.form['booking_start']
+    #booking_end = request.form['booking_end']
+    user_id = 1
+    space = Space(None, name, location, price, description, user_id)
+    space_repository.create(space)
+    return render_template('/index')
 
 # signup page
 @app.route('/signup', methods=['GET'])
