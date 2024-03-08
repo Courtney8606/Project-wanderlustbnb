@@ -116,6 +116,7 @@ def post_login():
     username = request.form['username']
     password = request.form['password']
     session['user'] = username
+    session['user_id'] = user_repository.find_by_username(username)
     if user_repository.login(username, password) == False:
         error_message = 'Username or password do not match, please try again.'
         signup_prompt = "Don't have an account? Sign up!"
@@ -159,14 +160,14 @@ def post_signup_page():
     name = request.form['name']
     password = request.form['password']
     repeat_password = request.form['repeat_password']
-    session_user = request.form["username"]
-    session["user"] = session_user
+    session['user'] = username
+    session['user_id'] = user_repository.find_by_username(username)
     if password != repeat_password:
         return render_template('signup.html', error_message='Passwords do not match. Please try again.')
     else:
         user = User(None, username, name, password)
         user_repository.create(user)
-        return render_template('signup_success.html', username=username)
+        return redirect('/index')
 
 
 # These lines start the server if you run this file directly
