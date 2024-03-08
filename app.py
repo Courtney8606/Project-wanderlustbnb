@@ -13,7 +13,7 @@ from lib.space import Space
 
 
 # Create a new Flask app
-app = Flask(__name__)
+app = Flask(__name__, template_folder='.')
 app.secret_key = "tangerine"
 
 # == Your Routes Here ==
@@ -45,7 +45,7 @@ def get_space_by_id(space_id):
     user_id = 2
     booking_repository = BookingRepository(connection)
     bookings = booking_repository.approved_bookings_string(user_id)
-    return render_template('spaces/space.html', space=space, bookings=bookings)
+    return render_template('space.html', space=space, bookings=bookings)
     
 # # booking has been successful page
 # @app.route('/success', methods=['GET'])
