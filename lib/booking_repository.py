@@ -39,6 +39,14 @@ class BookingRepository():
             bookings.append(row)
         return bookings
     
+    def approved_bookings_string(self, user_id):
+        rows = self._connection.execute('SELECT * from bookings WHERE approved = True AND userid_approver = %s', [user_id])
+        bookings = []
+        for row in rows:
+            date_booked = str(row["date_booked"])
+            #row = Booking(row["id"], row["space_id"], str(row["date_booked"]), row["userid_booker"], row["userid_approver"], row["approved"])
+            bookings.append(date_booked)
+        return bookings
 
     def approved_bookings_by_date_and_userid_approver(self, userid_approver):
         rows = self._connection.execute('SELECT * from bookings WHERE approved = True AND userid_approver = %s', [userid_approver])

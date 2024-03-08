@@ -39,9 +39,12 @@ def get_space_by_id(space_id):
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
     space = space_repository.find(space_id)
-
+    user_repository = UserRepository(connection)
+    #username = session.get('user')
+    #user = user_repository.find_by_username(username)
+    user_id = 2
     booking_repository = BookingRepository(connection)
-    bookings = booking_repository.approved_bookings_by_date_and_userid_approver()
+    bookings = booking_repository.approved_bookings_string(user_id)
     return render_template('spaces/space.html', space=space, bookings=bookings)
     
 # # booking has been successful page
