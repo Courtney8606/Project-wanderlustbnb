@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask, jsonify, request, render_template, url_for, session, redirect
 from lib import space_repository
 from lib.database_connection import get_flask_database_connection
@@ -52,12 +53,19 @@ def get_space_by_id(space_id):
 #     return render_template('booking/success.html', space=space) # page that says 'your booking at [SPACE] has been successful!
 
 # User bookings reviewed by approver
-@app.route('/users/<int:user_id>/requests', methods=['GET'])
-def get_unapproved_bookings(user_id):
+@app.route('/user/requests', methods=['GET'])
+def get_unapproved_and_approved_bookings():
     connection = get_flask_database_connection(app)
     booking_repository = BookingRepository(connection)
+    spaces_repository = SpaceRepository(connection)
+    user_repository = UserRepository(connection)
+    username = session.get('user')
+    user = user_repository.find_by_username(username)
+    user_id = user.id
     unapproved = booking_repository.unapproved_bookings(user_id)
-    return render_template('requests.html', unapproved=unapproved)
+    approved = booking_repository.approved_bookings(user_id)
+    space = spaces_repository.find_by_user_id(user_id)
+    return render_template('requests.html', unapproved=unapproved, approved=approved, space=space)
 
 # User approves a booking
 @app.route('/approvebooking', methods=['POST'])
@@ -69,16 +77,21 @@ def approve_booking():
     booking_repository.update_approval(booking_id)
     return redirect(f'/users/{approver_id}/requests')
 
+@app.route('/debug')
+def debug_session():
+    session_user = session.get('user')
+    return f"Session User: {session_user}"
 
 # Create a new booking request
 @app.route('/spaces/booking', methods=['POST'])
-def create_booking(space_id):
+def create_booking():
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
     user_repository = UserRepository(connection)
+    username = session.get('user')
     date_booked = request.form['date_booked']
     userid_approver = request.form['approver_id']
-    username = request.form['session.get("user")']
+    space_id = request.form['space_id']
     user = user_repository.find_by_username(username)
     userid_booker = user.id
     approved = False
@@ -111,30 +124,24 @@ def post_login():
 
     
 #create space
-@app.route('/spaces/new', methods=['POST'])
-def create_album():
+@app.route('/new', methods=['GET'])
+def get_listing_page():
+    return render_template('createlisting.html')
+
+@app.route('/index', methods=['POST'])
+def create_a_listing():
     connection = get_flask_database_connection(app)
-    repository_spaces = SpaceRepository(connection)
+    space_repository = SpaceRepository(connection)
     name = request.form['name']
-    loaction = request.form['location']
     description = request.form['description']
     price = request.form['price']
-    booking_date = request.form['booking_date']
-    if booking_date == "":
-        errors = "Please ensure all fields are filled in"
-        return render_template('albums/new_album.html', errors=errors)
-    artist = repository_artists.find_by_name(artist_name)
-    if not artist.is_valid():
-        return render_template('artists/new_artist_error.html')
-    else:
-        artist_id = artist.id
-        album = Album(None, title, release_year, artist_id)
-        if not album.is_valid():
-            errors = album.generate_errors()
-            return render_template('albums/new_album.html', errors=errors)
-        repository_albums.create(album)
-        return redirect(f"/albums/{album.id}")
-    return 
+    location = request.form['location']
+    #booking_start = request.form['booking_start']
+    #booking_end = request.form['booking_end']
+    user_id = 1
+    space = Space(None, name, location, price, description, user_id)
+    space_repository.create(space)
+    return render_template('/index')
 
 # signup page
 @app.route('/signup', methods=['GET'])

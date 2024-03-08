@@ -32,7 +32,7 @@ def test_unapproved_bookings(db_connection):
 def test_approved_bookings(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
     repository = BookingRepository(db_connection)
-    result = repository.approved_bookings()
+    result = repository.approved_bookings(2)
     assert result == [
         Booking(3, 2, datetime.date(2024, 7, 12), 1, 2, True)
     ]
@@ -40,13 +40,12 @@ def test_approved_bookings(db_connection):
 def test_update_approval(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
     repository = BookingRepository(db_connection)
-    booking = Booking(2, 3, datetime.date(2024, 7, 12), 2, 3, False)
-    repository.update_approval(booking)
-    result = repository.approved_bookings()
+
+    booking_id = 1
+    repository.update_approval(booking_id)
+    result = repository.approved_bookings(3)
     assert result == [
-        Booking(3, 2, datetime.date(2024, 7, 12), 1, 2, True),
-        Booking(2, 3, datetime.date(2024, 7, 12), 2, 3, True)
-    ]
+        Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, True)
 
 def test_return_list_of_approved_booking_for_a_space(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
@@ -54,8 +53,16 @@ def test_return_list_of_approved_booking_for_a_space(db_connection):
     result = repository.approved_bookings_by_date_and_userid_approver(2)
     assert result == [
         datetime.date(2024, 7, 12)
+
     ]
 
+def test_list_of_approved_bookings_for_a_space(db_connection):
+    db_connection.seed("seeds/spaces_table.sql")
+    repository = BookingRepository(db_connection)
+    result = repository.approved_bookings_by_date_and_userid_approver(2)
+    assert result == [
+        Booking(3, 2, datetime.date(2024, 7, 12), 1, 2, True)
+    ]
 # """
 # When I call .find() on the SpaceRepository with an id
 # I get the space corresponding to that id back

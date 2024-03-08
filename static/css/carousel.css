@@ -8,6 +8,9 @@ body {
   color: rgb(var(--bs-tertiary-color-rgb));
 }
 
+img.primary-icon{
+  width: 8rem;
+}
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */

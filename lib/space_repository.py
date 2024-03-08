@@ -18,6 +18,11 @@ class SpaceRepository():
         row = rows[0]
         return Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"])
 
+    def find_by_user_id(self, user_id):
+        rows = self._connection.execute("SELECT * FROM spaces WHERE user_id = %s", [user_id])
+        row = rows[0]
+        return Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"])
+    
     def create(self, space):
         self._connection.execute('INSERT INTO spaces (name, location, price, description, user_id) VALUES (%s, %s, %s, %s, %s)', [space.name, space.location, space.price, space.description, space.user_id])
         return None
