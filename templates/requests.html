@@ -9,13 +9,34 @@
     </head>
 
     <body>
+        <div class="booking-container">
+        <h1 style="text-align:center;">Bookings for approval</h1>
 
-       {% for item in unapproved %}
+       {% for booking in unapproved %}
+        <form class = "booking" action ="/approvebooking" method = "POST">
+        <h3>Property: {{space.name}}</h3>
+        <p>Date booked: {{booking.date_booked}}</p>
+        <p>Booked by: {{session.get('user')}}</p>
 
-        <p>{{item}}</p>
-        <button>Approve request</button>
-
+        <input type="hidden" name="booking_id" value="{{booking.id}}">
+        <input type="hidden" name="approver_id" value="{{booking.userid_approver}}">
+        <input type="Submit" class="file_submit">
+        </form>
         {% endfor %}
+        </div>
+    
+    
+        <div class="booking-container">
+        <h1>Confirmed bookings</h1>
+        {% for booking in approved %}
+        <div class = "booking">
+        <h3>Property: {{space.name}}</h3>
+        <p>Date booked: {{booking.date_booked}}</p>
+        <p>Booked by: {{session.get('user')}}</p>
+        </div>
+        {% endfor %}
+        </div>
+
 
     </body>
 
