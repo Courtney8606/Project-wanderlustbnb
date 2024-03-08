@@ -139,7 +139,7 @@
             <div class="carousel-caption text-start">
               <h1>Welcome, {{session.get('user')}}.</h1>
               <p class="opacity-75">Book a space and join hundreds across Europe.</p>
-              <p><a class="btn btn-lg btn-primary" href="#">Browse spaces</a></p>
+              <p><a class="btn btn-lg btn-primary" href="#spaces">Browse spaces</a></p>
               </p>
             </div>
           </div>
@@ -197,7 +197,7 @@
 
   
       <!-- Three columns of text below the carousel -->
-      <div class="row">
+      <div id="spaces" class="row">
         {% for space in spaces %}
         <div class="col-lg-4">
           <img class="bd-placeholder-img space-img" width="220" height="200" role="img" preserveAspectRatio="xMidYMid slice" focusable="false" src="static/images/house{{space.id}}.jpg">
