@@ -12,6 +12,17 @@ img.primary-icon{
   width: 8rem;
 }
 
+.listing-form{
+  margin: 50px; 
+}
+
+div.container{
+  margin-top: 50px;
+}
+
+.booking-container{
+  padding-top: 10px;
+}
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
