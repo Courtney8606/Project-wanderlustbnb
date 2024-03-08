@@ -118,7 +118,7 @@ def post_login():
         signup_prompt = "Don't have an account? Sign up!"
         return render_template('login.html', error_message=error_message, signup_prompt=signup_prompt)
     else:
-        return render_template('login_success.html', username=username)
+        return redirect('/index')
     
     
 
@@ -141,7 +141,7 @@ def create_a_listing():
     user_id = 1
     space = Space(None, name, location, price, description, user_id)
     space_repository.create(space)
-    return render_template('/index')
+    return redirect('/index')
 
 # signup page
 @app.route('/signup', methods=['GET'])
