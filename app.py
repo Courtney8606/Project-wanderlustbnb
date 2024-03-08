@@ -78,7 +78,7 @@ def approve_booking():
     booking_id = request.form['booking_id']
     approver_id = request.form['approver_id']
     booking_repository.update_approval(booking_id)
-    return redirect(f'/users/{approver_id}/requests')
+    return redirect(f'/user/requests')
 
 @app.route('/debug')
 def debug_session():

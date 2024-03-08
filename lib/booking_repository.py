@@ -56,8 +56,8 @@ class BookingRepository():
                 bookings.append(row["date_booked"])
         return bookings
 
-    def update_approval(self, booking):
-        self._connection.execute('UPDATE bookings SET approved = True WHERE id = %s', [booking.id])
+    def update_approval(self, booking_id):
+        self._connection.execute('UPDATE bookings SET approved = True WHERE id = %s', [booking_id])
 
 
     # def find(self, id):
