@@ -1,4 +1,5 @@
 from lib.booking import Booking
+from lib.space import Space
 
 
 class BookingRepository():
@@ -38,15 +39,17 @@ class BookingRepository():
             bookings.append(row)
         return bookings
     
-    def approved_bookings_by_date_and_userid_approver(self, user_id):
-        rows = self._connection.execute('SELECT * from bookings WHERE approved = True AND userid_approver = %s', [user_id])
+
+    def approved_bookings_by_date_and_userid_approver(self, userid_approver):
+        rows = self._connection.execute('SELECT * from bookings WHERE approved = True AND userid_approver = %s', [userid_approver])
         bookings = []
         for row in rows:
-            bookings.append(row["date_booked"])
+        #    if userid_approver == user_id:
+                bookings.append(row["date_booked"])
         return bookings
 
-    def update_approval(self, booking_id):
-        self._connection.execute('UPDATE bookings SET approved = True WHERE id = %s', [booking_id])
+    def update_approval(self, booking):
+        self._connection.execute('UPDATE bookings SET approved = True WHERE id = %s', [booking.id])
 
 
     # def find(self, id):

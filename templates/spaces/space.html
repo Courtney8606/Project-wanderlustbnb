@@ -27,7 +27,13 @@
                     var formattedDate = new Date(epochDate).toISOString().slice(0, 10);
                     
                     // Disable specific dates here
-                    var disabledDates = ["2024-03-10", "2024-03-15", "2024-03-20"];
+                    var disabledDates = [
+                {% for booking in bookings %},
+                    "{{ booking.date_booked.strftime('%Y-%m-%d') }}",
+                {% endfor %}
+            ];
+
+                    console.log(disabledDates); // Log disabledDates array
                     
                     // Check if formatted date is in disabledDates array
                     if (disabledDates.indexOf(formattedDate) != -1) {
@@ -109,6 +115,7 @@
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
               <input type="hidden" name="space_id" value="{{space.id}}">
+              <input type="hidden" name="date_booked" value="{{booking.date_booked}}">
               <input type="hidden" name="approver_id" value="{{space.user_id}}">
               <input type="hidden" name="date_booked" id="date_booked">
           </form>
