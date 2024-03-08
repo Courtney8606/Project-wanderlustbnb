@@ -1,5 +1,7 @@
 from lib.booking import Booking
+from lib.space import Space
 from lib.booking_repository import BookingRepository
+from lib.space_repository   import SpaceRepository
 import datetime
 
 def test_get_all_bookings(db_connection):
@@ -38,12 +40,20 @@ def test_approved_bookings(db_connection):
 def test_update_approval(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
     repository = BookingRepository(db_connection)
-    booking = Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, True)
+    booking = Booking(2, 3, datetime.date(2024, 7, 12), 2, 3, False)
     repository.update_approval(booking)
     result = repository.approved_bookings()
     assert result == [
         Booking(3, 2, datetime.date(2024, 7, 12), 1, 2, True),
-        Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, True)
+        Booking(2, 3, datetime.date(2024, 7, 12), 2, 3, True)
+    ]
+
+def test_return_list_of_approved_booking_for_a_space(db_connection):
+    db_connection.seed("seeds/spaces_table.sql")
+    repository = BookingRepository(db_connection)
+    result = repository.approved_bookings_by_date_and_userid_approver(2)
+    assert result == [
+        datetime.date(2024, 7, 12)
     ]
 
 # """
