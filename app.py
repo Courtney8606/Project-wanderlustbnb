@@ -49,12 +49,19 @@ def get_space_by_id(space_id):
 #     return render_template('booking/success.html', space=space) # page that says 'your booking at [SPACE] has been successful!
 
 # User bookings reviewed by approver
-@app.route('/users/<int:user_id>/requests', methods=['GET'])
-def get_unapproved_bookings(user_id):
+@app.route('/user/requests', methods=['GET'])
+def get_unapproved_and_approved_bookings():
     connection = get_flask_database_connection(app)
     booking_repository = BookingRepository(connection)
+    spaces_repository = SpaceRepository(connection)
+    user_repository = UserRepository(connection)
+    username = session.get('user')
+    user = user_repository.find_by_username(username)
+    user_id = user.id
     unapproved = booking_repository.unapproved_bookings(user_id)
-    return render_template('requests.html', unapproved=unapproved)
+    approved = booking_repository.approved_bookings(user_id)
+    space = spaces_repository.find_by_user_id(user_id)
+    return render_template('requests.html', unapproved=unapproved, approved=approved, space=space)
 
 # User approves a booking
 @app.route('/approvebooking', methods=['POST'])
@@ -66,16 +73,21 @@ def approve_booking():
     booking_repository.update_approval(booking_id)
     return redirect(f'/users/{approver_id}/requests')
 
+@app.route('/debug')
+def debug_session():
+    session_user = session.get('user')
+    return f"Session User: {session_user}"
 
 # Create a new booking request
 @app.route('/spaces/booking', methods=['POST'])
-def create_booking(space_id):
+def create_booking():
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
     user_repository = UserRepository(connection)
+    username = session.get('user')
     date_booked = request.form['date_booked']
     userid_approver = request.form['approver_id']
-    username = request.form['session.get("user")']
+    space_id = request.form['space_id']
     user = user_repository.find_by_username(username)
     userid_booker = user.id
     approved = False

@@ -41,8 +41,19 @@
                     };
                 }
             });
+            $('#bookingForm').submit(function(event) {
+            // Get the selected date from the Datepicker
+            var selectedDate = $('#datepicker').datepicker('getDate');
 
+            // Format the selected date as 'YYYY-MM-DD'
+            var formattedDate = selectedDate.toISOString().slice(0, 10);
+
+            // Set the value of the hidden input field to the selected date
+            $('#date_booked').val(formattedDate);
         });
+    });
+            
+
       </script>
 
       
@@ -73,7 +84,7 @@
 
         <div class="container">
           <h2>Booking Form</h2>
-          <form id="bookingForm">
+          <form id="bookingForm" method="POST" action="/spaces/booking">
               <div class="form-group">
                   <label for="datepicker">Select Date:</label>
                   <input type="text" class="form-control" id="datepicker" name="date_booked">
@@ -81,14 +92,8 @@
               <button type="submit" class="btn btn-primary">Submit</button>
               <input type="hidden" name="space_id" value="{{space.id}}">
               <input type="hidden" name="approver_id" value="{{space.user_id}}">
-              <input type="hidden" name="approver_id" value="{{session.get('user')}}">
+              <input type="hidden" name="date_booked" id="date_booked">
           </form>
-        </div>
-
-        <div>
-            <form class = "grid" action ="/spaces/booking" method = "POST">
-                <input type="Submit" class="file_submit">
-            </form>
         </div>
       
         <!-- Include Bootstrap Bundle JavaScript -->
