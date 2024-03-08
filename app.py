@@ -160,7 +160,7 @@ def post_signup_page():
     else:
         user = User(None, username, name, password)
         user_repository.create(user)
-        return render_template('signup_success.html', username=username)
+        return redirect('/index')
 
 
 # These lines start the server if you run this file directly
