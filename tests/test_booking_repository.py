@@ -46,6 +46,7 @@ def test_update_approval(db_connection):
     result = repository.approved_bookings(3)
     assert result == [
         Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, True)
+    ]
 
 def test_return_list_of_approved_booking_for_a_space(db_connection):
     db_connection.seed("seeds/spaces_table.sql")

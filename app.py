@@ -102,7 +102,12 @@ def create_booking():
     repository.create(booking)
     return render_template('successfulbooking.html')
 
-
+@app.route('/reject/<int:booking_id>', methods=['POST'])
+def reject_booking(booking_id):
+    connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    repository.delete(booking_id)
+    return redirect(f'/user/requests')
 
 # login page
 @app.route('/login', methods=['GET'])

@@ -40,8 +40,33 @@
 
         <input type="hidden" name="booking_id" value="{{booking.id}}">
         <input type="hidden" name="approver_id" value="{{booking.userid_approver}}">
-        <input type="Submit" class="file_submit">
+        <input type="Submit" class="file_submit" value="Approve Booking">
         </form>
+        <form id="rejectForm" action="/reject/{{booking.id}}" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="file_submit">Reject Booking</button>
+        </form>
+        
+        <script>
+            document.getElementById("rejectForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent the default form submission
+                fetch(this.action, {
+                    method: this.method,
+                    body: new FormData(this)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    // Redirect or do something else upon successful deletion
+                    window.location.href = '/user/requests';
+                })
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                    // Handle errors
+                });
+            });
+        </script>
         {% endfor %}
         </div>
     
