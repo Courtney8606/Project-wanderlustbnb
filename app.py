@@ -55,6 +55,11 @@ def get_space_by_id(space_id):
 #     space = space_repository.find(space_id) # assuming the method is called #find
 #     return render_template('booking/success.html', space=space) # page that says 'your booking at [SPACE] has been successful!
 
+# Open account page
+@app.route('/account', methods=['GET'])
+def get_account_page():
+    return render_template('account.html')
+
 # User bookings reviewed by approver
 @app.route('/user/requests', methods=['GET'])
 def get_unapproved_and_approved_bookings():

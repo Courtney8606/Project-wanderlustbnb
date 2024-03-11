@@ -122,3 +122,18 @@ div.container{
 .container-availability > p{
   margin-bottom: 0;
 }
+
+/* Account page */
+
+.account {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 35%;
+  padding-right: 35%;
+}
+
+.account-image {
+  max-height: 300px;
+  max-width: 200px;
+}
