@@ -20,6 +20,13 @@ def test_get_all_spaces(db_connection):
         Space(4, 'Mi Casa', 'Madrid', 45.50, 'Es tu Casa.', 3),
     ]
 
+def test_find_spaces_by_user_id(db_connection):
+    db_connection.seed("seeds/spaces_table.sql")
+    repository = SpaceRepository(db_connection)
+    assert repository.return_all_user_id(3) == [
+        Space(3, 'Paella Place', 'Madrid', 31.59, 'Eat paella and sleep.', 3),
+        Space(4, 'Mi Casa', 'Madrid', 45.50, 'Es tu Casa.', 3),
+    ]
 
 """
 When I call .find() on the SpaceRepository with an id
@@ -30,6 +37,7 @@ def test_find_one_space(db_connection):
     repository = SpaceRepository(db_connection)
     result = repository.find(3)
     assert result == Space(3,  'Paella Place', 'Madrid', 31.59, 'Eat paella and sleep.', 3)
+
 
 def test_create_space(db_connection):
     db_connection.seed("seeds/spaces_table.sql")

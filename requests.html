@@ -37,6 +37,8 @@
 
         <input type="hidden" name="booking_id" value="{{booking.id}}">
         <input type="hidden" name="approver_id" value="{{booking.userid_approver}}">
+        <input type="hidden" name="space_id" value="{{space.id}}">
+        <input type="hidden" name="space_name" value="{{space.name}}">
         <input type="Submit" class="file_submit" value="Approve Booking">
         </form>
         <form id="rejectForm" action="/reject/{{booking.id}}" method="POST">

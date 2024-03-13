@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title>MakersBnB</title>
+      <link rel="stylesheet" href="/static/css/carousel.css" >
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&family=Roboto&display=swap" rel="stylesheet">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta charset="UTF-8">
+    </head>
+
+    <body>
+      <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+
+        <img class="primary-icon" src="../static/images/makers-logo.png" class="logo">
+
+        <ul class="nav-list navbar-nav me-auto mb-2 mb-md-0" id="navi-list">
+            <li class="nav-item">
+                <a class="nav-link" href="/index">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/account">My account</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Signout</a>
+            </li>
+        </ul>
+    </div>
+
+      <h1>{{session.get('user')}}'s Account</h1>
+
+      <div class="account">
+        <div>
+        <h3>Host Account</h3>
+        <a href="/user/requests"><img class="account-image" src="../static/images/house1.jpg" ></a>
+        <p>Manage your property listings and bookings</p>
+        </div>
+        <div>
+        <ul>
+            <li><a href="/user/requests">Review booking requests</a></li>
+            <li><a href="/user/requests">Review bookings</a></li>
+            <li><a href="/new">List a property</a></li>
+            <li><a href="#">Review my properties</a></li>
+        </ul>
+        </div>
+      </div>
+
+      <div class="account">
+        <div>
+        <h3>Guest Account</h3>
+        <img class="account-image" src="../static/images/guest.jpg">
+        <p>Manage your guest bookings and prepare yourself for your holiday!</p>
+        </div>
+        <div>
+        <ul>
+            <li><a href="/user/requests">Review Booking Requests</a></li>
+            <li><a href="/user/requests">Review Bookings</a></li>
+            <li><a href="/index">View all properties</a></li>
+        </ul>
+        </div>
+      </div>
+    </div>
+
+    </body>
+
+
+</html>

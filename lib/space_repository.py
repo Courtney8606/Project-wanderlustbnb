@@ -12,6 +12,13 @@ class SpaceRepository():
             spaces.append(row)
         return spaces
     
+    def return_all_user_id(self, user_id):
+        rows = self._connection.execute("SELECT * FROM spaces WHERE user_id = %s", [user_id])
+        spaces = []
+        for row in rows:
+            row = Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"])
+            spaces.append(row)
+        return spaces
 
     def find(self, id):
         rows = self._connection.execute("SELECT * FROM spaces WHERE id = %s", [id])
