@@ -31,7 +31,7 @@ class BookingRepository():
         self._connection.execute('DELETE FROM bookings WHERE id = %s', [booking_id])
         return None
 
-    def unapproved_bookings(self, user_id, space_id):
+    def unapproved_bookings_by_space(self, user_id, space_id):
         rows = self._connection.execute('SELECT * from bookings WHERE approved = False AND userid_approver = %s AND space_id = %s', [user_id, space_id])
         bookings = []
         for row in rows:
@@ -39,7 +39,7 @@ class BookingRepository():
             bookings.append(row)
         return bookings
 
-    def approved_bookings(self, user_id, space_id):
+    def approved_bookings_by_space(self, user_id, space_id):
         rows = self._connection.execute('SELECT * from bookings WHERE approved = True AND userid_approver = %s AND space_id = %s', [user_id, space_id])
         bookings = []
         for row in rows:
@@ -53,6 +53,22 @@ class BookingRepository():
         for row in rows:
             date_booked = str(row["date_booked"])
             bookings.append(date_booked)
+        return bookings
+    
+    def unapproved_bookings(self, user_id):
+        rows = self._connection.execute('SELECT * from bookings WHERE approved = False AND userid_approver = %s', [user_id])
+        bookings = []
+        for row in rows:
+            row = Booking(row["id"], row["space_id"], row["date_booked"], row["userid_booker"], row["userid_approver"], row["approved"])
+            bookings.append(row)
+        return bookings
+
+    def approved_bookings(self, user_id):
+        rows = self._connection.execute('SELECT * from bookings WHERE approved = True AND userid_approver = %s', [user_id])
+        bookings = []
+        for row in rows:
+            row = Booking(row["id"], row["space_id"], row["date_booked"], row["userid_booker"], row["userid_approver"], row["approved"])
+            bookings.append(row)
         return bookings
 
     def update_approval(self, booking_id):

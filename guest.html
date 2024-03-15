@@ -10,56 +10,75 @@
     </head>
 
     <body>
-      <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 
-        <img class="primary-icon" src="../static/images/makers-logo.png" class="logo">
-
-        <ul class="nav-list navbar-nav me-auto mb-2 mb-md-0" id="navi-list">
-            <li class="nav-item">
-                <a class="nav-link" href="/index">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/account">My account</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/login">Signout</a>
-            </li>
-        </ul>
-    </div>
-
-      <h1>{{session.get('user')}}'s Account</h1>
-
-      <div class="account">
-        <div>
-        <h3>Host Account</h3>
-        <a href="/user/requests"><img class="account-image" src="../static/images/house1.jpg" ></a>
-        <p>Manage your property listings and bookings</p>
+            <img class="primary-icon" src="../static/images/makers-logo.png" class="logo">
+    
+            <ul class="nav-list navbar-nav me-auto mb-2 mb-md-0" id="navi-list">
+                <li class="nav-item">
+                    <a class="nav-link" href="/index">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/account">My account</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/login">Signout</a>
+                </li>
+            </ul>
         </div>
-        <div>
-        <ul>
-            <li><a href="/user/requests">Review booking requests</a></li>
-            <li><a href="/user/requests">Review bookings</a></li>
-            <li><a href="/new">List a property</a></li>
-            <li><a href="#">Review my properties</a></li>
-        </ul>
-        </div>
-      </div>
+        <div class="booking-container" style=" text-align: center; border-style:solid; border-width: thin; padding-bottom: 20px; min-height: 200px;">
+        <h1 style="text-align:center;">Bookings awaiting approval</h1>
 
-      <div class="account">
-        <div>
-        <h3>Guest Account</h3>
-        <img class="account-image" src="../static/images/guest.jpg">
-        <p>Manage your guest bookings and prepare yourself for your holiday!</p>
+       {% for booking in unapproved %}
+        <form class = "booking" action ="/approvebooking" method = "POST">
+        <h3>Property: {{space.name}}</h3>
+        <p>Date booked: {{booking.date_booked}}</p>
+        <p>Booked by: {{session.get('user')}}</p>
+
+        <input type="hidden" name="booking_id" value="{{booking.id}}">
+        <input type="hidden" name="approver_id" value="{{booking.userid_approver}}">
+        <input type="hidden" name="space_id" value="{{space.id}}">
+        <input type="hidden" name="space_name" value="{{space.name}}">
+        <input type="Submit" class="file_submit" value="Approve Booking">
+        </form>
+        <form id="rejectForm" action="/reject/{{booking.id}}" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="file_submit">Reject Booking</button>
+        </form>
+        
+        <script>
+            document.getElementById("rejectForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent the default form submission
+                fetch(this.action, {
+                    method: this.method,
+                    body: new FormData(this)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    // Redirect or do something else upon successful deletion
+                    window.location.href = '/user/requests';
+                })
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                    // Handle errors
+                });
+            });
+        </script>
+        {% endfor %}
         </div>
-        <div>
-        <ul>
-            <li><a href="/user/requests">Review Booking Requests</a></li>
-            <li><a href="/user/requests">Review Bookings</a></li>
-            <li><a href="/index">View all properties</a></li>
-        </ul>
+        <div class="booking-container" style=" text-align: center; border-style:solid; border-width: thin; padding-bottom: 20px; min-height: 200px;">
+        <h1>Confirmed bookings</h1>
+        {% for booking in approved %}
+        <div class = "booking">
+        <h3>Property: {{space.name}}</h3>
+        <p>Date booked: {{booking.date_booked}}</p>
+        <p>Booked by: {{session.get('user')}}</p>
         </div>
-      </div>
-    </div>
+        {% endfor %}
+        </div>
+
 
     </body>
 
