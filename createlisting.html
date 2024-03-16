@@ -25,7 +25,26 @@
             </li>
         </ul>
     </div>
-    <form class="listing-form" action="/index" method="POST">
+
+    <p>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </p>
+
+    {% if filename %}
+    <div>
+        <img src="{{ url_for('display_image', filename=filename) }}" style="max-width: 300px; max-height: auto">
+    </div>
+    {% endif %}
+    
+    <form class="listing-form" action="/index" method="POST" enctype="multipart/form-data">
         <h2>List a space</h2>
         <p>
             <label for="name"> Name</label><br>
@@ -42,7 +61,19 @@
         <p>
             <label for="description">Description</label><br>
             <input type="text" name="description" id="description">
-        </p>
+            <br>
+            <br>
+            <p>Select an image to upload</p>
+            <dl>
+                <p>
+                    <input type="file" name="file" class="form-control" autocomplete="off" required>
+                </p>
+            </dl>
+            <p>
+                <input type="submit" value="Submit" class="btn btn-info">
+            </p>
+
+        </form>
         <!--<p>
             <label for="booking_start">Available from (DD/MM/YY)</label><br>
             <input type="text" name="booking-start" id="booking-start">
@@ -51,9 +82,9 @@
             <label for="booking_end">Available to (DD/MM/YY)</label><br>
             <input type="text" name="booking-end" id="booking-end">
         </p>-->
-        <p>
+        <!-- <p>!!
         <input type="submit" value="List my space" href="index.html">
-        </p>
+        </p> -->
     </form>
 </body>
 </html>

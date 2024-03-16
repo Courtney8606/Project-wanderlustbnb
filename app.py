@@ -1,6 +1,5 @@
 import os
-
-from flask import Flask, jsonify, request, render_template, url_for, session, redirect
+from flask import Flask, flash, jsonify, request, render_template, url_for, session, redirect
 from lib import space_repository
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import Space, SpaceRepository
@@ -9,12 +8,27 @@ from lib.user_repository import UserRepository
 from lib.booking import Booking
 from lib.user import User
 from lib.space import Space
+import urllib.request
+from werkzeug.utils import secure_filename
+from lib.image_repository import ImageRepository
+from lib.image import Image
 
+import psycopg2
+import psycopg2.extras
 
 
 # Create a new Flask app
 app = Flask(__name__, template_folder='.')
 app.secret_key = "tangerine"
+
+UPLOAD_FOLDER = 'static/uploads/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # == Your Routes Here ==
 
@@ -177,14 +191,31 @@ def get_listing_page():
 def create_a_listing():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
+    repository = ImageRepository(connection)
+    user_repository = UserRepository(connection)
     name = request.form['name']
     description = request.form['description']
     price = request.form['price']
     location = request.form['location']
+    file = request.files['file']
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        image = Image(None, filename)
+        repository.create(image)
+        flash('Image successfully loaded and displayed below')
     #booking_start = request.form['booking_start']
     #booking_end = request.form['booking_end']
-    user_id = 1
-    space = Space(None, name, location, price, description, user_id)
+    username = session.get('user')
+    user = user_repository.find_by_username(username)
+    user_id = user.id
+    space = Space(None, name, location, price, description, user_id, filename)
     space_repository.create(space)
     return redirect('/index')
 
@@ -209,6 +240,11 @@ def post_signup_page():
         user = User(None, username, name, password)
         user_repository.create(user)
         return redirect('/index')
+
+
+# Route to upload images
+
+
 
 
 # These lines start the server if you run this file directly
