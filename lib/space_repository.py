@@ -8,7 +8,7 @@ class SpaceRepository():
         rows = self._connection.execute('SELECT * from spaces')
         spaces = []
         for row in rows:
-            row = Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"])
+            row = Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"], row["image_title"])
             spaces.append(row)
         return spaces
     
@@ -16,22 +16,22 @@ class SpaceRepository():
         rows = self._connection.execute("SELECT * FROM spaces WHERE user_id = %s", [user_id])
         spaces = []
         for row in rows:
-            row = Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"])
+            row = Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"], row["image_title"])
             spaces.append(row)
         return spaces
 
     def find(self, id):
         rows = self._connection.execute("SELECT * FROM spaces WHERE id = %s", [id])
         row = rows[0]
-        return Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"])
+        return Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"], row["image_title"])
 
     def find_by_user_id(self, user_id):
         rows = self._connection.execute("SELECT * FROM spaces WHERE user_id = %s", [user_id])
         row = rows[0]
-        return Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"])
+        return Space(row["id"], row["name"], row["location"], row["price"], row["description"], row["user_id"], row["image_title"])
     
     def create(self, space):
-        self._connection.execute('INSERT INTO spaces (name, location, price, description, user_id) VALUES (%s, %s, %s, %s, %s)', [space.name, space.location, space.price, space.description, space.user_id])
+        self._connection.execute('INSERT INTO spaces (name, location, price, description, user_id, image_title) VALUES (%s, %s, %s, %s, %s, %s)', [space.name, space.location, space.price, space.description, space.user_id, space.image_title])
         return None
 
     def delete(self, space_id):
@@ -39,5 +39,5 @@ class SpaceRepository():
         return None
     
     def update(self, space):
-        self._connection.execute('UPDATE spaces SET name = %s, location = %s, price = %s, description = %s, user_id = %s WHERE id = %s', [space.name, space.location, space.price, space.description, space.user_id, space.id])
+        self._connection.execute('UPDATE spaces SET name = %s, location = %s, price = %s, description = %s, user_id = %s, image_title = %s WHERE id = %s', [space.name, space.location, space.price, space.description, space.user_id, space.image_title, space.id])
         
