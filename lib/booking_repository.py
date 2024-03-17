@@ -55,7 +55,7 @@ class BookingRepository():
             bookings.append(date_booked)
         return bookings
     
-    def unapproved_bookings(self, user_id):
+    def unapproved_bookings_by_user_id(self, user_id):
         rows = self._connection.execute('SELECT * from bookings WHERE approved = False AND userid_approver = %s', [user_id])
         bookings = []
         for row in rows:
@@ -63,7 +63,8 @@ class BookingRepository():
             bookings.append(row)
         return bookings
 
-    def approved_bookings(self, user_id):
+
+    def approved_bookings_by_user_id(self, user_id):
         rows = self._connection.execute('SELECT * from bookings WHERE approved = True AND userid_approver = %s', [user_id])
         bookings = []
         for row in rows:

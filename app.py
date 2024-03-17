@@ -100,7 +100,24 @@ def get_unapproved_and_approved_bookings():
     space = spaces_repository.find_by_user_id(user_id)
     return render_template('guest.html', unapproved=unapproved, approved=approved, space=space)
 
-# User bookings reviewed by approver
+
+# Guest reviews bookings by user_id
+@app.route('/guest', methods=['GET'])
+def get_unapproved_and_approved_bookings():
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    spaces_repository = SpaceRepository(connection)
+    user_repository = UserRepository(connection)
+    username = session.get('user')
+    user = user_repository.find_by_username(username)
+    user_id = user.id
+    unapproved = booking_repository.unapproved_bookings_by_user_id(user_id)
+    approved = booking_repository.approved_bookings_by_user_id(user_id)
+    space = spaces_repository.find_by_user_id(user_id)
+    return render_template('guest.html', unapproved=unapproved, approved=approved, space=space)
+
+# Bookings reviewed by approver by property
+
 @app.route('/user/requests/<space_name>/<int:space_id>', methods=['GET'])
 def get_unapproved_and_approved_bookings_by_space(space_name, space_id):
     connection = get_flask_database_connection(app)
@@ -153,8 +170,12 @@ def create_booking():
 def reject_booking(booking_id):
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
+    spaces_repository = SpaceRepository(connection)
+    booking_id = request.form['booking_id']
+    space_id = request.form['space_id']
     repository.delete(booking_id)
-    return redirect(f'/user/requests')
+    space = spaces_repository.find(space_id)
+    return redirect(url_for('get_unapproved_and_approved_bookings_by_space', space_name=space.name, space_id=space.id))
 
 # login page
 @app.route('/login', methods=['GET'])
