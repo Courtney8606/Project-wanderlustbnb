@@ -27,40 +27,26 @@
         </ul>
     </div>
 
-      <h1>{{session.get('user')}}'s Account</h1>
-
-      <div class="account">
-        <div>
-        <h3>Host Account</h3>
-        <a href="/user/requests"><img class="account-image" src="../static/images/house1.jpg" ></a>
-        <p>Manage your property listings and bookings</p>
-        </div>
-        <div>
-        <ul>
-            <li><a href="/user/requests">Review booking requests</a></li>
-            <li><a href="/user/requests">Review bookings</a></li>
-            <li><a href="/new">List a property</a></li>
-            <li><a href="#">Review my properties</a></li>
-        </ul>
-        </div>
+    <div class="booking-container" style=" text-align: center; border-style:solid; border-width: thin; padding-bottom: 20px; min-height: 200px;">
+      <h1 style="text-align:center;">Bookings awaiting approval</h1>
+      {% for booking in unapproved %}
+      <h3>Property: {{space.name}}</h3>
+      <p>Date booked: {{booking.date_booked}}</p>
+      <p>Booked by: {{session.get('user')}}</p>
+      {% endfor %}
       </div>
-
-      <div class="account">
-        <div>
-        <h3>Guest Account</h3>
-        <img class="account-image" src="../static/images/guest.jpg">
-        <p>Manage your guest bookings and prepare yourself for your holiday!</p>
-        </div>
-        <div>
-        <ul>
-            <li><a href="/user/requests">Review Booking Requests</a></li>
-            <li><a href="/user/requests">Review Bookings</a></li>
-            <li><a href="/index">View all properties</a></li>
-        </ul>
-        </div>
+  
+  
+      <div class="booking-container" style=" text-align: center; border-style:solid; border-width: thin; padding-bottom: 20px; min-height: 200px;">
+      <h1>Confirmed bookings</h1>
+      {% for booking in approved %}
+      <div class = "booking">
+      <h3>Property: {{space.name}}</h3>
+      <p>Date booked: {{booking.date_booked}}</p>
+      <p>Booked by: {{session.get('user')}}</p>
       </div>
-    </div>
-
+      {% endfor %}
+      </div>
     </body>
 
 

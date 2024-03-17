@@ -39,10 +39,13 @@
         <input type="hidden" name="approver_id" value="{{booking.userid_approver}}">
         <input type="hidden" name="space_id" value="{{space.id}}">
         <input type="hidden" name="space_name" value="{{space.name}}">
-        <input type="Submit" class="file_submit" value="Approve Booking">
+        <input type="submit" class="file_submit" value="Approve Booking">
         </form>
+
         <form id="rejectForm" action="/reject/{{booking.id}}" method="POST">
             <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="booking_id" value="{{booking.id}}">
+            <input type="hidden" name="space_id" value="{{space.id}}">
             <button type="submit" class="file_submit">Reject Booking</button>
         </form>
         
@@ -58,7 +61,7 @@
                         throw new Error('Network response was not ok');
                     }
                     // Redirect or do something else upon successful deletion
-                    window.location.href = '/user/requests';
+                    window.location.href = '/user/requests/{{space.name}}/{{space.id}}';
                 })
                 .catch(error => {
                     console.error('There was a problem with your fetch operation:', error);
@@ -70,7 +73,7 @@
         </div>
     
     
-        <div class="booking-container" style=" text-align: center; border-style:solid; border-width: thin; padding-bottom: 20px; min-height: 200px;">
+        <div class="booking-container" id="approved" style=" text-align: center; border-style:solid; border-width: thin; padding-bottom: 20px; min-height: 200px;">
         <h1>Confirmed bookings</h1>
         {% for booking in approved %}
         <div class = "booking">

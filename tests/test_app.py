@@ -1,37 +1,27 @@
 from playwright.sync_api import Page, expect
 from lib.user_repository import UserRepository, User
 
-# Tests for your routes go here
 
 """
 We can render the index page
 """
-# def test_get_index(page, test_web_address):
-#     # We load a virtual browser and navigate to the /index page
-#     page.goto(f"http://{test_web_address}/index")
 
-#     # We look at the <p> tag
-#     title = page.locator("Title")
+# check /index route works
 
-#    # We assert that it has the text "This is the homepage."
-#     expect(title).to_have_text("MakersBnB")
+def test_get_all_spaces(page, test_web_address, db_connection, web_client):
+    db_connection.seed('seeds/spaces_table.sql')
+    page.goto(f'http://{test_web_address}/index')
+    response = web_client.get('/index')
+    assert response.status_code == 200
+    div_tags = page.locator('div.col-lg-4 h3')
+    expect(div_tags).to_have_text([
+        'Wizarding Cupboard',
+        'Amore Penthouse',
+        'Paella Place',
+        'Mi Casa'
+    ])
 
-# check /spaces route works
-
-# def test_get_all_spaces(page, test_web_address, db_connection, web_client):
-#     db_connection.seed('seeds/spaces_table.sql')
-#     page.goto(f'http://{test_web_address}/spaces')
-#     response = web_client.get('/spaces')
-#     assert response.status_code == 200
-#     div_tags = page.locator('div')
-#     expect(div_tags).to_have_text([
-#         'Name: Wizarding Cupboard\nLocation: London',
-#         'Name: Amore Penthouse\nLocation: Paris',
-#         'Name: Paella Place\nLocation: Madrid',
-#         'Name: Mi Casa\nLocation: Madrid'
-#     ])
-
-# check each individual space on /spaces/<space_id>
+# check individual spaces on /spaces/<space_id>
 
 def test_get_individual_space_1(page, test_web_address, db_connection, space_id=1):
     db_connection.seed('seeds/spaces_table.sql')
@@ -48,6 +38,22 @@ def test_get_individual_space_2(page, test_web_address, db_connection, space_id=
     space_info = page.locator('p')
     expect(header).to_have_text('Amore Penthouse')
     expect(space_info).to_have_text('Location: Paris\nDescription: Within view of the Eiffel Tower, this penthouse is your parisian dream.\nPrice per night: 87.0')
+
+def test_create_booking(page, test_web_address, db_connection, space_id=2):
+    db_connection.seed('seeds/spaces_table.sql')
+    page.goto(f'http://{test_web_address}/spaces/{space_id}')
+    page.fill("input[name='date_booked']", "2024-10-07")
+    page.click("button[type='submit']")
+    header = page.locator("h1")
+    expect(header).to_have_text("SUCCESS!")
+
+def test_approve_booking(page, test_web_address, db_connection, space_id=4, space_name='Mi Casa'):
+    db_connection.seed('seeds/spaces_table.sql')
+    page.goto(f'http://{test_web_address}/user/requests/{space_name}/{space_id}')
+    page.click("form.booking input[type='submit'][value='Approve Booking']")
+    property_name = page.evaluate('(document.querySelector("div#2 h3")).innerText')
+    expect(property_name).to_equal(space_name)
+
 
 def test_login_page(page, test_web_address, db_connection):
         db_connection.seed('seeds/spaces_table.sql')
@@ -98,23 +104,26 @@ def test_successful_signup(page, test_web_address, db_connection):
         expect(welcome_message).to_have_text('Welcome, lord_snow, you have successfully signed up.')
 
     
-def test_post_a_listing(db_connection, web_client, page, test_web_address):
-    db_connection.seed("seeds/spaces_table.sql")
-    post_response = web_client.post("/index", data={
-        'name': 'test',
-        'location': 'test',
-        'price': 48.0,
-        'description': 'A cosy test under the tests. Comes with complementary tests.',
-        'user_id': 1
-    })
-    assert post_response.status_code == 200
-    page.goto(f"http://{test_web_address}/index")
-    content_tag = page.locator("p")
-    expect(content_tag).to_have_text([
-        "test"
-        ])
-
-
+# def test_create_a_listing(db_connection, web_client, page, test_web_address):
+#     db_connection.seed("seeds/spaces_table.sql")
+#     response = web_client.post("/index", data={
+#         'name': 'Test',
+#         'location': 'test',
+#         'price': 48.0,
+#         'description': 'A cosy test under the tests. Comes with complementary tests.',
+#         'user_id': 1,
+#         'file': 'house5.jpg'
+#     })
+#     assert response.status_code == 200
+#     page.goto(f"http://{test_web_address}/index")
+#     div_tags = page.locator('div.col-lg-4 h3')
+#     expect(div_tags).to_have_text([
+#         'Wizarding Cupboard',
+#         'Amore Penthouse',
+#         'Paella Place',
+#         'Mi Casa',
+#         'Test'
+#     ])
 
 def test_signup_page_loads_correctly(web_client, db_connection):
     db_connection.seed('seeds/spaces_table.sql')
