@@ -85,21 +85,6 @@ def get_host_page():
     spaces = space_repository.return_all_user_id(user_id)
     return render_template('host.html', spaces=spaces)
 
-# User bookings reviewed by booker
-@app.route('/guest', methods=['GET'])
-def get_unapproved_and_approved_bookings():
-    connection = get_flask_database_connection(app)
-    booking_repository = BookingRepository(connection)
-    spaces_repository = SpaceRepository(connection)
-    user_repository = UserRepository(connection)
-    username = session.get('user')
-    user = user_repository.find_by_username(username)
-    user_id = user.id
-    unapproved = booking_repository.unapproved_bookings(user_id)
-    approved = booking_repository.approved_bookings(user_id)
-    space = spaces_repository.find_by_user_id(user_id)
-    return render_template('guest.html', unapproved=unapproved, approved=approved, space=space)
-
 
 # Guest reviews bookings by user_id
 @app.route('/guest', methods=['GET'])

@@ -23,7 +23,7 @@ def test_create_booking(db_connection):
 def test_unapproved_bookings(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
     repository = BookingRepository(db_connection)
-    result = repository.unapproved_bookings(3, 4)
+    result = repository.unapproved_bookings_by_space(3, 4)
     assert result == [
         Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, False),
     ]
@@ -31,13 +31,13 @@ def test_unapproved_bookings(db_connection):
 def test_unapproved_bookings_none(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
     repository = BookingRepository(db_connection)
-    result = repository.unapproved_bookings(1, 1)
+    result = repository.unapproved_bookings_by_space(1, 1)
     assert result == []
 
 def test_approved_bookings(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
     repository = BookingRepository(db_connection)
-    result = repository.approved_bookings(2, 2)
+    result = repository.approved_bookings_by_space(2, 2)
     assert result == [
         Booking(3, 2, datetime.date(2024, 7, 12), 1, 2, True)
     ]
@@ -47,7 +47,7 @@ def test_update_approval(db_connection):
     repository = BookingRepository(db_connection)
     booking_id = 1
     repository.update_approval(booking_id)
-    result = repository.approved_bookings(3, 4)
+    result = repository.approved_bookings_by_space(3, 4)
     assert result == [
         Booking(1, 4, datetime.date(2024, 7, 12), 1, 3, True)
     ]
