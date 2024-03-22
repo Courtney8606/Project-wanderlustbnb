@@ -118,7 +118,7 @@
                 <a class="nav-link" href="/account">My account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/login">Signout</a>
+                <a class="nav-link" href="/">Signout</a>
               </li>
             </ul>
           </div>
@@ -140,7 +140,7 @@
           <img class="bd-placeholder-img carousel-image" width="100%" height="100%" focusable="false" src="static/images/carousel1.jpg">
           <div class="container">
             <div class="carousel-caption text-start">
-              <h1>Welcome, {{session.get('user')}}.</h1>
+              <h1 class="user-welcome">Welcome, {{session.get('user')}}.</h1>
               <p class="opacity-75">Book a space and join hundreds across Europe.</p>
               <p><a class="btn btn-lg btn-primary" href="#spaces">Browse spaces</a></p>
               </p>

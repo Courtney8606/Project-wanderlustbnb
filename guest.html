@@ -1,54 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-      <title>MakersBnB</title>
-      <link rel="stylesheet" href="/static/css/carousel.css" >
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&family=Roboto&display=swap" rel="stylesheet">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <meta charset="UTF-8">
-    </head>
+  <head>
+    <title>MakersBnB</title>
+    <link rel="stylesheet" href="/static/css/carousel.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+  </head>
 
-    <body>
-        <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <body>
+    <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <img
+        class="primary-icon"
+        src="../static/images/makers-logo.png"
+        class="logo"
+      />
 
-        <img class="primary-icon" src="../static/images/makers-logo.png" class="logo">
-
-        <ul class="nav-list navbar-nav me-auto mb-2 mb-md-0" id="navi-list">
-            <li class="nav-item">
-                <a class="nav-link" href="/index">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/account">My account</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/login">Signout</a>
-            </li>
-        </ul>
+      <ul class="nav-list navbar-nav me-auto mb-2 mb-md-0" id="navi-list">
+        <li class="nav-item">
+          <a class="nav-link" href="/index">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account">My account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">Signout</a>
+        </li>
+      </ul>
     </div>
 
-    <div class="booking-container" style=" text-align: center; border-style:solid; border-width: thin; padding-bottom: 20px; min-height: 200px;">
-      <h1 style="text-align:center;">Bookings awaiting approval</h1>
+    <div
+      class="booking-container"
+      style="
+        text-align: center;
+        border-style: solid;
+        border-width: thin;
+        padding-bottom: 20px;
+        min-height: 200px;
+      "
+    >
+      <h1 style="text-align: center">Bookings awaiting approval</h1>
       {% for booking in unapproved %}
       <h3>Property: {{space.name}}</h3>
       <p>Date booked: {{booking.date_booked}}</p>
       <p>Booked by: {{session.get('user')}}</p>
       {% endfor %}
-      </div>
-  
-  
-      <div class="booking-container" style=" text-align: center; border-style:solid; border-width: thin; padding-bottom: 20px; min-height: 200px;">
+    </div>
+
+    <div
+      class="booking-container"
+      style="
+        text-align: center;
+        border-style: solid;
+        border-width: thin;
+        padding-bottom: 20px;
+        min-height: 200px;
+      "
+    >
       <h1>Confirmed bookings</h1>
       {% for booking in approved %}
-      <div class = "booking">
-      <h3>Property: {{space.name}}</h3>
-      <p>Date booked: {{booking.date_booked}}</p>
-      <p>Booked by: {{session.get('user')}}</p>
+      <div class="booking">
+        <h3>Property: {{space.name}}</h3>
+        <p>Date booked: {{booking.date_booked}}</p>
+        <p>Booked by: {{session.get('user')}}</p>
       </div>
       {% endfor %}
-      </div>
-
-    </body>
-
-
+    </div>
+  </body>
 </html>
