@@ -2,13 +2,9 @@
 <html lang="en">
   <head>
     <title>MakersBnB</title>
-    <link rel="stylesheet" href="/static/css/carousel.css" />
+    <link rel="stylesheet" href="/static/css/account.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&family=Roboto&display=swap"
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,8 +15,9 @@
     <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <img
         class="primary-icon"
-        src="../static/images/makers-logo.png"
+        src="../static/images/logoplane.png"
         class="logo"
+        style="width: 40px;"
       />
 
       <ul class="nav-list navbar-nav me-auto mb-2 mb-md-0" id="navi-list">
@@ -36,10 +33,16 @@
       </ul>
     </div>
 
-    <h1>SUCCESS!</h1>
-    <p>
-      Your booking request has been sent to the property owner for approval. We
-      hope you enjoy your holiday {{session.get('user')}}!
-    </p>
+    <div class="accounts-grid">
+      <div class="accounts-wrapper">
+        <a href="/host"><img class="account-image" src="/static/images/house.png"></a>
+        <h3><a href="/host">&nbsp;Host</a></h3>
+      </div>
+  
+      <div class="accounts-wrapper">
+        <a href="/guest"><img class="account-image" src="/static/images/suitcase.png"/></a>
+        <h3><a href="/guest">Guest</a></h3>
+      </div>
+      
   </body>
 </html>

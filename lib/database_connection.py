@@ -3,21 +3,18 @@ from flask import g
 from psycopg.rows import dict_row
 
 
-# This class helps us interact with the database.
-# It wraps the underlying psycopg library that we are using.
+# This class helps us interact with the database and wraps the underlying psycopg library that we are using.
 
-# If the below seems too complex right now, that's OK.
-# That's why we have provided it!
+
 class DatabaseConnection:
-    # VVV CHANGE BOTH OF THESE VVV
+  
     DEV_DATABASE_NAME = "makersbnb"
     TEST_DATABASE_NAME = "makersbnb_test"
 
     def __init__(self, test_mode=False):
         self.test_mode = test_mode
 
-    # This method connects to PostgreSQL using the psycopg library. We connect
-    # to localhost and select the database name given in argument.
+    # This method connects to PostgreSQL using the psycopg library. It connects to localhost and select the database name given in argument.
     def connect(self):
         try:
             self.connection = psycopg.connect(
@@ -27,8 +24,7 @@ class DatabaseConnection:
             raise Exception(f"Couldn't connect to the database {self._database_name()}! " \
                     f"Did you create it using `createdb {self._database_name()}`?")
 
-    # This method seeds the database with the given SQL file.
-    # We use it to set up our database ready for our tests or application.
+    # This method seeds the database with the given SQL file. We use it to set up our database ready for our tests or application.
     def seed(self, sql_filename):
         self._check_connection()
         if not os.path.exists(sql_filename):
@@ -37,8 +33,7 @@ class DatabaseConnection:
             cursor.execute(open(sql_filename, "r").read())
             self.connection.commit()
 
-    # This method executes an SQL query on the database.
-    # It allows you to set some parameters too. You'll learn about this later.
+    # This method executes an SQL query on the database. It allows you to set some parameters too. You'll learn about this later.
     def execute(self, query, params=[]):
         self._check_connection()
         with self.connection.cursor() as cursor:
@@ -68,8 +63,7 @@ class DatabaseConnection:
         else:
             return self.DEV_DATABASE_NAME
 
-# This function integrates with Flask to create one database connection that
-# Flask request can use. To see how to use it, look at example_routes.py
+# This function integrates with Flask to create one database connection that Flask request can use. 
 def get_flask_database_connection(app):
     if not hasattr(g, 'flask_database_connection'):
         g.flask_database_connection = DatabaseConnection(

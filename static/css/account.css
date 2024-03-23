@@ -1,0 +1,79 @@
+body {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  color: rgb(var(--bs-tertiary-color-rgb));
+}
+
+.accounts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-left: 150px;
+  padding-right: 150px;
+  padding-top: 100px;
+  padding-bottom: 20px;
+}
+
+.accounts-wrapper {
+  justify-self: center;
+  padding: 10%;
+  border: 5px solid grey;
+  border-radius: 10%;
+  position: relative;
+}
+
+.accounts-wrapper > h3 a {
+  position: absolute;
+  font-size: 50px;
+  color: white;
+  top: 48%;
+  left: 36%;
+  text-decoration: none;
+}
+
+.accounts-wrapper:hover > h3 a:visited {
+  color: white;
+}
+
+.account-image {
+  max-width: 100%;
+  max-height: 300px;
+}
+
+@media screen and (max-width: 1200px) {
+  .accounts-grid {
+    grid-template-columns: 1fr;
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+    row-gap: 20px;
+  }
+  .accounts-wrapper > h3 a {
+    font-size: 4.5vw;
+  }
+  .accounts-wrapper {
+    width: 50%;
+  }
+  .accounts-wrapper img {
+    max-width: 100%;
+    height: auto;
+  }
+  .accounts-wrapper > h3 a {
+    top: 50%;
+    left: 38%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .accounts-wrapper {
+    width: 60%;
+  }
+  .accounts-wrapper img {
+    max-width: 100%;
+    height: auto;
+  }
+  .accounts-wrapper > h3 a {
+    top: 50%;
+    left: 39%;
+    font-size: 4.5vw;
+  }
+}

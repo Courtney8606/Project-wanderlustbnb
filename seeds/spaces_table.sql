@@ -2,6 +2,7 @@
 -- And add any data that is needed for the tests to run.
 -- This is so that our tests, and application, are always operating from a fresh
 -- database state, and that tests don't interfere with each other.
+
 DROP TABLE IF EXISTS spaces;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
 DROP TABLE IF EXISTS users;
@@ -46,7 +47,7 @@ CREATE TABLE upload (
     title VARCHAR( 100 ) NOT NULL
 );
 
--- Finally, we add any records that are needed for the tests to run
+-- Add any records that are needed for the tests to run
 
 INSERT INTO spaces (name, location, price, description, user_id, image_title) VALUES ('Wizarding Cupboard', 'London', 50.00, 'A cosy room under the stairs. Comes with complementary spiders.', 1, 'house1.jpg');
 INSERT INTO spaces (name, location, price, description, user_id, image_title) VALUES ('Amore Penthouse', 'Paris', 87.00, 'Within view of the Eiffel Tower, this penthouse is your parisian dream.', 2, 'house2.jpg');

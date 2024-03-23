@@ -16,6 +16,11 @@ def test_find_user(db_connection):
     repository = UserRepository(db_connection)
     assert repository.find(3) == User(3, 'montoya', 'Inigo Montoya', 'prepare2die')
 
+def test_find_user_by_username(db_connection):
+    db_connection.seed('seeds/spaces_table.sql')
+    repository = UserRepository(db_connection)
+    assert repository.find_by_username("montoya") == User(3, 'montoya', 'Inigo Montoya', 'prepare2die')
+
 def test_create_user(db_connection):
     db_connection.seed('seeds/spaces_table.sql')
     repository = UserRepository(db_connection)

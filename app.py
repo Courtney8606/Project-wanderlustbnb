@@ -18,7 +18,7 @@ import psycopg2.extras
 
 
 # Creating a new Flask app
-app = Flask(__name__, template_folder='.')
+app = Flask(__name__, template_folder='templates')
 app.secret_key = "tangerine"
 
 # File upload setup
@@ -35,7 +35,7 @@ def allowed_file(filename):
 # == Routes ==
 
 # GET /index - Returns the homepage
-# http://localhost:5000/index
+# http://localhost:5000/
 
 @app.route('/index', methods=['GET'])
 def get_index():
@@ -44,7 +44,7 @@ def get_index():
     spaces = space_repository.all()
     return render_template('index.html', spaces=spaces)
 
-# Returns a property by space.id
+# Returns a property by space id
 @app.route('/spaces/<int:space_id>', methods=['GET'])
 def get_space_by_id(space_id):
     connection = get_flask_database_connection(app)
@@ -182,6 +182,44 @@ def create_a_listing():
     space = Space(None, name, location, price, description, user_id, filename)
     space_repository.create(space)
     return redirect('/index')
+
+# Render Update a property listing page
+@app.route('/user/update/<space_name>/<int:space_id>', methods=['GET'])
+def get_space_update_page(space_name, space_id):
+    connection = get_flask_database_connection(app)
+    space_repository = SpaceRepository(connection)
+    space = space_repository.find(space_id)
+    return render_template('updateproperty.html', space=space)
+
+# Update a property
+@app.route('/updated/<int:space_id>', methods=['GET', 'POST'])
+def update_property_listing(space_id):
+    connection = get_flask_database_connection(app)
+    space_repository = SpaceRepository(connection)
+    repository = ImageRepository(connection)
+    user_repository = UserRepository(connection)
+    name = request.form['name']
+    description = request.form['description']
+    price = request.form['price']
+    location = request.form['location']
+    file = request.files['file']
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        image = Image(space_id, filename)
+        repository.update(image)
+    username = session.get('user')
+    user = user_repository.find_by_username(username)
+    user_id = user.id
+    space = Space(space_id, name, location, price, description, user_id, filename)
+    space_repository.update(space)
+    return redirect('/host')
 
 # Renders Login page
 @app.route('/', methods=['GET'])

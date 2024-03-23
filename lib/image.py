@@ -1,6 +1,5 @@
 class Image:
-    # We initialise with all of our attributes
-    # Each column in the table should have an attribute here
+    # Initialise with all of our attributes
     def __init__(self, id, title):
         self.id = id
         self.title = title
@@ -10,5 +9,6 @@ class Image:
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
 
+    # Formatting
     def __repr__(self):
         return f"Image({self.id}, {self.title})"

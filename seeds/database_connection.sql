@@ -3,7 +3,7 @@
 -- This is so that our tests, and application, are always operating from a fresh
 -- database state, and that tests don't interfere with each other.
 
--- First, we must delete (drop) all our tables
+-- Delete (drop) all our tables
 DROP TABLE IF EXISTS test_table;
 
 -- Then, we recreate them
