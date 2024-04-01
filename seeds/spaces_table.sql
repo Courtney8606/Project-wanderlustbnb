@@ -67,4 +67,3 @@ INSERT INTO upload (title) VALUES ('house2.jpg');
 INSERT INTO upload (title) VALUES ('house3.jpg');
 INSERT INTO upload (title) VALUES ('house4.jpg');
 
-

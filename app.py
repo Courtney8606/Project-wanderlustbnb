@@ -32,6 +32,13 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def validate_user():
+    connection = get_flask_database_connection(app)
+    user_repository = UserRepository(connection)
+    username = session.get('user')
+    user = user_repository.find_by_username(username)
+    return user.id
+
 # == Routes ==
 
 # GET /index - Returns the homepage
@@ -48,12 +55,9 @@ def get_index():
 @app.route('/spaces/<int:space_id>', methods=['GET'])
 def get_space_by_id(space_id):
     connection = get_flask_database_connection(app)
+    user_id = validate_user()
     space_repository = SpaceRepository(connection)
     space = space_repository.find(space_id)
-    user_repository = UserRepository(connection)
-    username = session.get('user')
-    user = user_repository.find_by_username(username)
-    user_id = user.id
     booking_repository = BookingRepository(connection)
     bookings = booking_repository.approved_bookings_string(user_id)
     return render_template('space.html', space=space, bookings=bookings)
@@ -67,11 +71,8 @@ def get_account_page():
 @app.route('/host', methods=['GET'])
 def get_host_page():
     connection = get_flask_database_connection(app)
+    user_id = validate_user()
     space_repository = SpaceRepository(connection)
-    user_repository = UserRepository(connection)
-    username = session.get('user')
-    user = user_repository.find_by_username(username)
-    user_id = user.id
     spaces = space_repository.return_all_user_id(user_id)
     return render_template('host.html', spaces=spaces)
 
@@ -79,12 +80,9 @@ def get_host_page():
 @app.route('/guest', methods=['GET'])
 def get_unapproved_and_approved_bookings():
     connection = get_flask_database_connection(app)
+    user_id = validate_user()
     booking_repository = BookingRepository(connection)
     spaces_repository = SpaceRepository(connection)
-    user_repository = UserRepository(connection)
-    username = session.get('user')
-    user = user_repository.find_by_username(username)
-    user_id = user.id
     unapproved = booking_repository.unapproved_bookings_by_user_id(user_id)
     approved = booking_repository.approved_bookings_by_user_id(user_id)
     space = spaces_repository.find_by_user_id(user_id)
@@ -95,12 +93,9 @@ def get_unapproved_and_approved_bookings():
 @app.route('/user/requests/<space_name>/<int:space_id>', methods=['GET'])
 def get_unapproved_and_approved_bookings_by_space(space_name, space_id):
     connection = get_flask_database_connection(app)
+    user_id = validate_user()
     booking_repository = BookingRepository(connection)
     spaces_repository = SpaceRepository(connection)
-    user_repository = UserRepository(connection)
-    username = session.get('user')
-    user = user_repository.find_by_username(username)
-    user_id = user.id
     unapproved = booking_repository.unapproved_bookings_by_space(user_id, space_id)
     approved = booking_repository.approved_bookings_by_space(user_id, space_id)
     space = spaces_repository.find(space_id)
@@ -110,6 +105,7 @@ def get_unapproved_and_approved_bookings_by_space(space_name, space_id):
 @app.route('/approvebooking', methods=['POST'])
 def approve_booking():
     connection = get_flask_database_connection(app)
+    validate_user()
     booking_repository = BookingRepository(connection)
     spaces_repository = SpaceRepository(connection)
     booking_id = request.form['booking_id']
@@ -122,14 +118,11 @@ def approve_booking():
 @app.route('/spaces/booking', methods=['POST'])
 def create_booking():
     connection = get_flask_database_connection(app)
-    repository = BookingRepository(connection)
-    user_repository = UserRepository(connection)
-    username = session.get('user')
+    userid_booker = validate_user()
+    repository = BookingRepository(connection) 
     date_booked = request.form['date_booked']
     userid_approver = request.form['approver_id']
     space_id = request.form['space_id']
-    user = user_repository.find_by_username(username)
-    userid_booker = user.id
     approved = False
     booking = Booking(None, space_id, date_booked, userid_booker, userid_approver, approved)
     repository.create(booking)
@@ -139,6 +132,7 @@ def create_booking():
 @app.route('/reject/<int:booking_id>', methods=['POST'])
 def reject_booking(booking_id):
     connection = get_flask_database_connection(app)
+    validate_user()
     repository = BookingRepository(connection)
     spaces_repository = SpaceRepository(connection)
     booking_id = request.form['booking_id']
@@ -156,9 +150,9 @@ def get_listing_page():
 @app.route('/index', methods=['POST'])
 def create_a_listing():
     connection = get_flask_database_connection(app)
+    user_id = validate_user()
     space_repository = SpaceRepository(connection)
     repository = ImageRepository(connection)
-    user_repository = UserRepository(connection)
     name = request.form['name']
     description = request.form['description']
     price = request.form['price']
@@ -175,10 +169,6 @@ def create_a_listing():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         image = Image(None, filename)
         repository.create(image)
-        flash('Image successfully loaded and displayed below')
-    username = session.get('user')
-    user = user_repository.find_by_username(username)
-    user_id = user.id
     space = Space(None, name, location, price, description, user_id, filename)
     space_repository.create(space)
     return redirect('/index')
@@ -187,6 +177,7 @@ def create_a_listing():
 @app.route('/user/update/<space_name>/<int:space_id>', methods=['GET'])
 def get_space_update_page(space_name, space_id):
     connection = get_flask_database_connection(app)
+    validate_user()
     space_repository = SpaceRepository(connection)
     space = space_repository.find(space_id)
     return render_template('updateproperty.html', space=space)
@@ -196,8 +187,8 @@ def get_space_update_page(space_name, space_id):
 def update_property_listing(space_id):
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
-    repository = ImageRepository(connection)
-    user_repository = UserRepository(connection)
+    image_repository = ImageRepository(connection)
+    user_id = validate_user()
     name = request.form['name']
     description = request.form['description']
     price = request.form['price']
@@ -213,10 +204,7 @@ def update_property_listing(space_id):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         image = Image(space_id, filename)
-        repository.update(image)
-    username = session.get('user')
-    user = user_repository.find_by_username(username)
-    user_id = user.id
+        image_repository.update(image)
     space = Space(space_id, name, location, price, description, user_id, filename)
     space_repository.update(space)
     return redirect('/host')
@@ -233,13 +221,12 @@ def post_login():
     user_repository = UserRepository(connection)
     username = request.form['username']
     password = request.form['password']
-    session['user'] = username
-    #session['user_id'] = user_repository.find_by_username(username)
     if user_repository.login(username, password) == False:
         error_message = 'Username or password do not match, please try again.'
         signup_prompt = "Don't have an account? Sign up!"
         return render_template('login.html', error_message=error_message, signup_prompt=signup_prompt)
     else:
+        session['user'] = username
         return redirect('/index')
     
 # Renders signup page
@@ -256,13 +243,16 @@ def post_signup_page():
     name = request.form['name']
     password = request.form['password']
     repeat_password = request.form['repeat_password']
-    session['user'] = username
-    #session['user_id'] = user_repository.find_by_username(username)
     if password != repeat_password:
-        return render_template('signup.html', error_message='Passwords do not match. Please try again.')
+        error_message = 'Passwords do not match. Please try again.'
+        return render_template('signup.html', error_message=error_message)
+    elif password == '':
+        error_message = 'You have not entered a password. Please enter a password to set up your account.'
+        return render_template('signup.html', error_message=error_message)
     else:
         user = User(None, username, name, password)
         user_repository.create(user)
+        session['user'] = username
         return redirect('/index')
 
 # Debug route to session user
