@@ -51,6 +51,12 @@
         <li><a href="/user/requests/{{space.name}}/{{space.id}}">Review bookings</a></li>
         <li><a href="/spaces/{{space.id}}">View property details</a></li>
         <li><a href="/user/update/{{space.name}}/{{space.id}}">Update property details</a></li>
+        <form id="deleteForm" method="POST" action="/delete/{{space.id}}">
+          <input type="hidden" name="space_id" value="{{space.id}}" />
+          <a href="#" onclick="document.getElementById('deleteForm').submit(); return false;">Delete property</a>
+        </form>
+     
+
       </div>
 
       {% endfor %}

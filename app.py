@@ -119,13 +119,13 @@ def approve_booking():
 def create_booking():
     connection = get_flask_database_connection(app)
     userid_booker = validate_user()
-    repository = BookingRepository(connection) 
+    booking_repository = BookingRepository(connection) 
     date_booked = request.form['date_booked']
     userid_approver = request.form['approver_id']
     space_id = request.form['space_id']
     approved = False
     booking = Booking(None, space_id, date_booked, userid_booker, userid_approver, approved)
-    repository.create(booking)
+    booking_repository.create(booking)
     return render_template('successfulbooking.html')
 
 # Host Reject a booking
@@ -133,11 +133,11 @@ def create_booking():
 def reject_booking(booking_id):
     connection = get_flask_database_connection(app)
     validate_user()
-    repository = BookingRepository(connection)
+    booking_repository = BookingRepository(connection)
     spaces_repository = SpaceRepository(connection)
     booking_id = request.form['booking_id']
     space_id = request.form['space_id']
-    repository.delete(booking_id)
+    booking_repository.delete(booking_id)
     space = spaces_repository.find(space_id)
     return redirect(url_for('get_unapproved_and_approved_bookings_by_space', space_name=space.name, space_id=space.id))
     
@@ -152,7 +152,7 @@ def create_a_listing():
     connection = get_flask_database_connection(app)
     user_id = validate_user()
     space_repository = SpaceRepository(connection)
-    repository = ImageRepository(connection)
+    image_repository = ImageRepository(connection)
     name = request.form['name']
     description = request.form['description']
     price = request.form['price']
@@ -168,7 +168,7 @@ def create_a_listing():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         image = Image(None, filename)
-        repository.create(image)
+        image_repository.create(image)
     space = Space(None, name, location, price, description, user_id, filename)
     space_repository.create(space)
     return redirect('/index')
@@ -208,6 +208,17 @@ def update_property_listing(space_id):
     space = Space(space_id, name, location, price, description, user_id, filename)
     space_repository.update(space)
     return redirect('/host')
+
+# Host deletes a space
+@app.route('/delete/<int:space_id>', methods=['POST'])
+def delete_space(space_id):
+    connection = get_flask_database_connection(app)
+    validate_user()
+    spaces_repository = SpaceRepository(connection)
+    space_id = request.form['space_id']
+    spaces_repository.delete(space_id)
+    spaces = spaces_repository.all()
+    return redirect(url_for('get_host_page', spaces=spaces))
 
 # Renders Login page
 @app.route('/', methods=['GET'])
