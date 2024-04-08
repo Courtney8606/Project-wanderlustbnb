@@ -5,6 +5,7 @@ from lib.image import Image
 def test_get_all_spaces(db_connection):
     db_connection.seed("seeds/spaces_table.sql")
     repository = SpaceRepository(db_connection)
+    assert type(repository.all()[0].price) == type(50.00)
     assert repository.all() == [
         Space(1, 'Wizarding Cupboard', 'London', 50.00, 'A cosy room under the stairs. Comes with complementary spiders.', 1, 'house1.jpg'),
         Space(2, 'Amore Penthouse', 'Paris', 87.00, 'Within view of the Eiffel Tower, this penthouse is your parisian dream.', 2, 'house2.jpg'),

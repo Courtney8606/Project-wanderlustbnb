@@ -17,7 +17,7 @@ CREATE TABLE spaces (
   id SERIAL PRIMARY KEY,
   name text,
   location text,
-  price numeric(7,2),
+  price float,
   description text,
   user_id int,
   image_title text
