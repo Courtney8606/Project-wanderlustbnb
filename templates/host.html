@@ -35,26 +35,27 @@
     </div>
 
 
-    <h1 style="text-align: center; padding-top: 20px;">My Properties</h1>
+    <h1 class="my-properties">My Properties</h1>
 
-    <a href="/new">List a property</a></li>
+    <a class="host-list" href="/new">List a new property</a>
     
-    <div id="spaces" class="row">
+    <div id="spaces" class="properties">
 
       {% for space in spaces %}
       
       <div class="col-lg-4">
-        <img class="bd-placeholder-img space-img" width="220" height="200" role="img" preserveAspectRatio="xMidYMid slice" focusable="false" src="static/uploads/{{space.image_title}}">
+        <form id="deleteForm{{space.id}}" method="POST" action="/delete/{{space.id}}">
+          <a class="property-action" href="#" onclick="document.getElementById('deleteForm{{space.id}}').submit(); return false;">Delete property</a>
+        </form>
+        <img class="host-properties" role="img" preserveAspectRatio="xMidYMid slice" focusable="false" src="static/uploads/{{space.image_title}}">
         <h3 class="fw-normal">{{space.name}}</h3>
         <p style="margin-bottom: 0;">{{space.location}}</p>
-        <li><a href="/user/requests/{{space.name}}/{{space.id}}">Review booking requests</a></li>
-        <li><a href="/user/requests/{{space.name}}/{{space.id}}">Review bookings</a></li>
-        <li><a href="/spaces/{{space.id}}">View property details</a></li>
-        <li><a href="/user/update/{{space.name}}/{{space.id}}">Update property details</a></li>
-        <form id="deleteForm" method="POST" action="/delete/{{space.id}}">
-          <input type="hidden" name="space_id" value="{{space.id}}" />
-          <a href="#" onclick="document.getElementById('deleteForm').submit(); return false;">Delete property</a>
-        </form>
+        <div class="property-actions">
+        <li class="property-list"><a class="property-action" href="/user/requests/{{space.name}}/{{space.id}}">Review booking requests</a></li>
+        <li class="property-list"><a class="property-action" href="/user/requests/{{space.name}}/{{space.id}}">Review bookings</a></li>
+        <li class="property-list"><a class="property-action" href="/spaces/{{space.id}}">View property details</a></li>
+        <li class="property-list"><a class="property-action" href="/user/update/{{space.name}}/{{space.id}}">Update property details</a></li>
+        </div>
      
 
       </div>

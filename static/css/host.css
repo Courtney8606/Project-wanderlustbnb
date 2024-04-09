@@ -3,3 +3,82 @@ body {
   padding-bottom: 3rem;
   color: rgb(var(--bs-tertiary-color-rgb));
 }
+
+.col-lg-4 {
+  display: flex;
+  flex-direction: column;
+}
+
+.properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  row-gap: 50px;
+  column-gap: 40px;
+  justify-items: center;
+  padding-top: 50px;
+}
+
+.property-actions {
+  padding-left: 0; /* Remove default left padding */
+}
+
+.property-actions li {
+  padding-left: 1.5em; /* Adjust as needed to match the width of the bullet point */
+  text-indent: -1.5em; /* Use a negative value to move the text back to align with the bullet point */
+}
+
+.property-action {
+  color: black;
+  font-size: 16px;
+  width: 220px;
+  text-decoration: none;
+}
+
+.property-action:hover {
+  color: grey;
+}
+
+.host-properties {
+  width: 200px; 
+  height: 200px;
+  border-radius: 7px; 
+}
+
+.property-list {
+  width: 220px;
+}
+.host-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  text-decoration: none;
+  text-align: center;
+  font-size: 18px;
+}
+
+.host-list:hover {
+  color: grey;
+}
+
+.my-properties {
+  text-align: center; 
+  padding-top: 40px;
+}
+
+@media screen and (max-width: 767px) {
+  .properties {
+    padding-left: 40px;
+  }
+  .my-properties {
+    padding-top: 130px;
+  }
+  
+  }
+
+  @media screen and (min-width: 1401px) {
+    body {
+      max-width: 1400px; 
+      margin: 0 auto; 
+    }
+  }

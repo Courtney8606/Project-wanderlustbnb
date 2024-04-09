@@ -70,16 +70,13 @@ def test_get_all_spaces(page, test_web_address, db_connection):
 
 def test_get_all_spaces_filtered_search(page, test_web_address, db_connection):
     db_connection.seed('seeds/spaces_table.sql')
-    user_logs_in(page, test_web_address)
-    page.goto(f'http://{test_web_address}/index')
+    user_logs_in(page, test_web_address) 
     page.fill("input[name='checkin']", "2024-07-12")
-    page.click("action[value='Search']")
+    page.click("button[type='Submit']")
     div_tags = page.locator('div.col-lg-4 h3')
-    expect(div_tags).to_have_text([
-        'Wizarding Cupboard',
-        'Paella Place',
-        'Mi Casa'
-    ])
+    expect(div_tags).to_have_text(
+        'Wizarding Cupboard'
+    )
 
 # When trying to access /index, return to Login page if user if not logged in
 

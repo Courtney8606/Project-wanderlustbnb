@@ -265,7 +265,6 @@ def update_property_listing(space_id):
 def delete_space(space_id):
     connection = get_flask_database_connection(app)
     spaces_repository = SpaceRepository(connection)
-    space_id = request.form['space_id']
     spaces_repository.delete(space_id)
     spaces = spaces_repository.all()
     return redirect(url_for('get_host_page', spaces=spaces))
