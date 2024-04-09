@@ -66,6 +66,21 @@ def test_get_all_spaces(page, test_web_address, db_connection):
         'Mi Casa'
     ])
 
+# Render the Index page with filters available properties based on search criteria
+
+def test_get_all_spaces_filtered_search(page, test_web_address, db_connection):
+    db_connection.seed('seeds/spaces_table.sql')
+    user_logs_in(page, test_web_address)
+    page.goto(f'http://{test_web_address}/index')
+    page.fill("input[name='checkin']", "2024-07-12")
+    page.click("action[value='Search']")
+    div_tags = page.locator('div.col-lg-4 h3')
+    expect(div_tags).to_have_text([
+        'Wizarding Cupboard',
+        'Paella Place',
+        'Mi Casa'
+    ])
+
 # When trying to access /index, return to Login page if user if not logged in
 
 def test_redirect_login(page, test_web_address, db_connection):
@@ -76,27 +91,28 @@ def test_redirect_login(page, test_web_address, db_connection):
 
 # User can create a new listing when logged in 
 
-# def test_create_a_listing(db_connection, page, test_web_address):
-#     db_connection.seed("seeds/spaces_table.sql")
-#     user_logs_in(page, test_web_address)
-#     page.goto(f'http://{test_web_address}/new')
-#     page.fill("input[name='name']", "Test Property")
-#     page.fill("input[name='location']", "Test Location")
-#     page.fill("input[name='price']", "54.00")
-#     page.fill("input[name='description']", "Test Description")
-#     current_dir = os.path.dirname(__file__)
-#     relative_path = 'static/images/house1.jpg'
-#     file_path = os.path.abspath(os.path.join(current_dir, relative_path))
-#     page.set_input_files("input[name='file']", file_path)
-#     page.click("input[type='submit']")
-#     div_tags = page.locator('div.col-lg-4 h3')
-#     expect(div_tags).to_have_text([
-#         'Wizarding Cupboard',
-#         'Amore Penthouse',
-#         'Paella Place',
-#         'Mi Casa',
-#         'Test Property'
-#     ])
+def test_create_a_listing(db_connection, page, test_web_address):
+    db_connection.seed("seeds/spaces_table.sql")
+    user_logs_in(page, test_web_address)
+    page.goto(f'http://{test_web_address}/new')
+    page.fill("input[name='name']", "Test Property")
+    page.fill("input[name='location']", "Test Location")
+    page.fill("input[name='price']", "54.00")
+    page.fill("input[name='description']", "Test Description")
+    current_dir = os.path.dirname(__file__)
+    relative_path = '../static/images/house1.jpg'
+    file = os.path.abspath(os.path.join(current_dir, relative_path))
+    print(file)
+    page.set_input_files("input[name='file']", file)
+    page.click("input[type='submit']")
+    div_tags = page.locator('div.col-lg-4 h3')
+    expect(div_tags).to_have_text([
+        'Wizarding Cupboard',
+        'Amore Penthouse',
+        'Paella Place',
+        'Mi Casa',
+        'Test Property'
+    ])
 
 # User redirected to login from /new if not logged in - cannot create a new listing
 

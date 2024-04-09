@@ -124,20 +124,21 @@
 
 
     <div class="container marketing">
-      <h2 style="text-align: center; padding-bottom: 20px;">Available properties</h2>
-
+        <h2 style="text-align: center; padding-bottom: 20px;">Available properties</h2>
+        
         <div class="container-availability">
             <h4>Filter your search by date</h4>
             <form action="/filterbydate" method='GET'>
               <label for="checkin">Check-in Date:</label>
               <input type="date" id="checkin" name="checkin">
-              <button type="submit" class="btn btn-secondary">Search</button>
+              <button type="submit" class="btn btn-info">Search</button>
             </form>   
         </div>
 
   
       <!-- Three columns of properties below the carousel -->
     <div id="spaces" class="row">
+      
       {% for space in spaces %}
       
       <div class="col-lg-4">

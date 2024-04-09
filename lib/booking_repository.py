@@ -1,4 +1,6 @@
 from lib.booking import Booking
+from datetime import timedelta
+import datetime
 
 class BookingRepository():
     # Initialise with a database connection
@@ -24,6 +26,14 @@ class BookingRepository():
             bookings.append(row)
         return bookings
 
+    def all_by_space_id_dates_booked(self, space_id):
+        rows = self._connection.execute('SELECT * from bookings WHERE space_id = %s', [space_id])
+        bookings = []
+        for row in rows:
+            date_booked = (str(row["date_booked"]))
+            bookings.append(date_booked)
+        return bookings
+    
     # Create a new booking
     def create(self, booking):
         self._connection.execute('INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved) VALUES (%s, %s, %s, %s, %s)', [booking.space_id, booking.date_booked, booking.userid_booker, booking.userid_approver, booking.approved])
@@ -53,8 +63,8 @@ class BookingRepository():
         return bookings
     
     # Return approved bookings in a string(datepicker calendar)
-    def approved_bookings_string(self, user_id):
-        rows = self._connection.execute('SELECT * from bookings WHERE approved = True AND userid_approver = %s', [user_id])
+    def approved_bookings_string(self, space_id):
+        rows = self._connection.execute('SELECT * from bookings WHERE approved = True AND space_id = %s', [space_id])
         bookings = []
         for row in rows:
             date_booked = str(row["date_booked"])

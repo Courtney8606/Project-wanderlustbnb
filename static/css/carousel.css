@@ -116,8 +116,16 @@ div.container {
 
 .container-availability {
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 10px;
+  color: #585C68;
+  padding-bottom: 20px;
 }
 
-.container-availability > p {
-  margin-bottom: 0;
+#checkin {
+  color: #585C68
 }
+  

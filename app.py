@@ -14,6 +14,7 @@ from werkzeug.utils import secure_filename
 from lib.image_repository import ImageRepository
 from lib.image import Image
 from functools import wraps
+import sys
 
 import psycopg2
 import psycopg2.extras
@@ -25,7 +26,7 @@ app.secret_key = "tangerine"
 
 # File upload setup
 
-UPLOAD_FOLDER = 'static/uploads/'
+UPLOAD_FOLDER = '/Users/courtneysuhr/Projects/makersbnb-python-tangerine/static/uploads/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
@@ -63,6 +64,32 @@ def get_index():
     spaces = space_repository.all()
     return render_template('index.html', spaces=spaces)
 
+@app.route('/filterbydate', methods=['GET'])
+@login_required
+def filter_index_by_dates_available():
+    connection = get_flask_database_connection(app) 
+    space_repository = SpaceRepository(connection)
+    booking_repository = BookingRepository(connection)
+    checkin = request.args.get('checkin')
+    print("checkin:", checkin)
+    spaces = space_repository.all()
+    available_spaces = []
+    for space in spaces:
+        space_id = space.id
+        dates_booked = booking_repository.all_by_space_id_dates_booked(space_id)
+        print("Dates booked:", dates_booked, file=sys.stderr)
+
+        available = True
+        for date_booked in dates_booked:
+            if checkin == date_booked:
+                available = False
+                break
+        
+        if available:
+            available_spaces.append(space)
+    print("Available spaces:", available_spaces, file=sys.stderr)
+    return render_template('filtered.html', spaces=available_spaces)
+
 # Returns a property by space id
 @app.route('/spaces/<int:space_id>', methods=['GET'])
 @login_required
@@ -72,7 +99,7 @@ def get_space_by_id(space_id):
     space_repository = SpaceRepository(connection)
     space = space_repository.find(space_id)
     booking_repository = BookingRepository(connection)
-    bookings = booking_repository.approved_bookings_string(user_id)
+    bookings = booking_repository.approved_bookings_string(space_id)
     return render_template('space.html', space=space, bookings=bookings)
 
 # Create a new booking request
@@ -188,8 +215,10 @@ def create_a_listing():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         image = Image(None, filename)
+        print(image)
         image_repository.create(image)
     space = Space(None, name, location, price, description, user_id, filename)
+    print(space)
     space_repository.create(space)
     return redirect('/index')
 
