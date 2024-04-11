@@ -25,23 +25,17 @@
             $('#datepicker').datepicker({
                 format: 'yyyy-mm-dd',
                 beforeShowDay: function(date) {
-                    // Convert date to milliseconds since the Unix epoch
-                    var epochDate = date.getTime();
+                    var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 
-                    // Convert epoch date to formatted date
-                    var formattedDate = new Date(epochDate).toISOString().slice(0, 10);
-
-                    // Disable specific dates here
+                    // Disable specific dates - pull booking data by space
                     var disabledDates =
                         {{ bookings|tojson }};
 
-                    console.log(disabledDates); // Log disabledDates array
-
                     // Check if formatted date is in disabledDates array
-                    if (disabledDates.indexOf(formattedDate) != -1) {
+                    if (disabledDates.includes(formattedDate)) {
                         return {
                             enabled: false,
-                            classes: 'disabled-date' // Add a CSS class to visually indicate the disabled date
+                            classes: 'disabled-date' 
                         };
                     }
                     return {
@@ -100,14 +94,20 @@
     </div>
 
     <div class="container">
+      <div>
+        <img class="spaceid-image" role="img" src="/static/uploads/{{space.image_title}}">
+      </div>
+      <div class="space-info">
       <h1>{{space.name}}</h1>
       <p>
         <b>Location:</b> {{space.location}} <br />
         <b>Description:</b> {{space.description}} <br />
         <b>Price per night:</b> £{{space.price}}
       </p>
-      <h2>Booking Form</h2>
+      </div>
+      
       <form id="bookingForm" method="POST" action="/spaces/booking">
+        <h2>Booking Form</h2>
         <div class="form-group">
           <label for="datepicker">Select Date:</label>
           <input
@@ -117,7 +117,7 @@
             name="date_booked"
           />
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Request</button>
         <input type="hidden" name="space_id" value="{{space.id}}" />
         <input type="hidden" name="approver_id" value="{{space.user_id}}" />
         <input type="hidden" name="date_booked" id="date_booked" />
