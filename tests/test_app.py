@@ -220,9 +220,9 @@ def test_navigate_guest_account(page, test_web_address, db_connection):
     h3_tag = page.locator('h3')
     expect(h3_tag).to_have_text(['Host', 'Guest'])
     page.click("#guest-link")
-    approved_booking_container = page.query_selector('.booking-container#approved')
-    approved_text = approved_booking_container.inner_text()
-    assert "Property: Amore Penthouse" in approved_text
+    unapproved_booking_container = page.query_selector('.booking-container#unapproved')
+    unapproved_text = unapproved_booking_container.inner_text()
+    assert "Property: Paella Place" in unapproved_text
 
 # Test guest booking can be rejected by Host user
 
@@ -237,3 +237,11 @@ def test_logout(page, test_web_address, db_connection):
     h1_tag = page.locator('h1')
     expect(h1_tag).to_have_text('Login | MakersBnB')
 
+def test_new_guest_message_after_approval(page, test_web_address, db_connection):
+    db_connection.seed('seeds/spaces_table.sql')
+    page.goto(f'http://{test_web_address}/')
+    page.fill("input[name='username']", "mrs_dursley")
+    page.fill("input[name='password']", "hatemynephew123")
+    page.click("button[type='submit']")  
+    message = page.locator('#new-approval-link')
+    expect(message).to_have_text('New Message 🔔')

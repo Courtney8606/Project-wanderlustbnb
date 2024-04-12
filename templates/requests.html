@@ -45,12 +45,13 @@
     >
       <h1 style="text-align: center">Bookings for approval</h1>
 
-      {% for booking in unapproved %}
+      {% for booking in unapproved %} {% for booking_id, guest_username in
+      guests.items() %} {% if booking_id == booking.id %}
 
       <form class="booking" action="/approvebooking" method="POST">
         <h3>Property: {{space.name}}</h3>
         <p>Date booked: {{booking.date_booked}}</p>
-        <p>Booked by: {{session.get('user')}}</p>
+        <p>Booked by: {{guest_username}}</p>
         <input type="hidden" name="booking_id" value="{{booking.id}}" />
         <input
           type="hidden"
@@ -69,8 +70,7 @@
           Reject Booking
         </button>
       </form>
-
-      {% endfor %}
+      {% endif %} {% endfor %} {% endfor %}
     </div>
 
     <div
@@ -85,13 +85,14 @@
       "
     >
       <h1>Confirmed bookings</h1>
-      {% for booking in approved %}
+      {% for booking in approved %} {% for booking_id, guest_username in
+      guests.items() %} {% if booking_id == booking.id %}
       <div class="booking">
         <h3>Property: {{space.name}}</h3>
         <p>Date booked: {{booking.date_booked}}</p>
-        <p>Booked by: {{session.get('user')}}</p>
+        <p>Booked by: {{guest_username}}</p>
       </div>
-      {% endfor %}
+      {% endif %} {% endfor %} {% endfor %}
     </div>
   </body>
 </html>

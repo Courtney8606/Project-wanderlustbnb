@@ -55,11 +55,19 @@
                 >Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="account-link" href="/account">My account</a>
+              <a class="nav-link" id="account-link" href="/account">My account
+              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="logout-link" href="/logout">Signout</a>
             </li>
+            {% for approved_booking in approved_bookings %}
+              {% if approved_booking.display_message_icon %}
+            <li class="nav-item">
+              <a class="nav-link" id="new-approval-link" href="/newapprovedbooking">New Message <span id="message-icon">&#128276;</span></a>
+            </li>
+            {% endif %}
+            {% endfor %}
           </ul>
         </div>
       </div>
@@ -163,6 +171,5 @@
 
   </main>
   <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-  
   </body>
 </html>

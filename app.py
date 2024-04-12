@@ -60,9 +60,12 @@ def get_user_id():
 @login_required
 def get_index():
     connection = get_flask_database_connection(app) 
+    user_id = get_user_id()
+    booking_repository = BookingRepository(connection)
     space_repository = SpaceRepository(connection)
+    approved_bookings = booking_repository.approved_bookings_by_user_id(user_id)
     spaces = space_repository.all()
-    return render_template('index.html', spaces=spaces)
+    return render_template('index.html', spaces=spaces, approved_bookings=approved_bookings)
 
 @app.route('/filterbydate', methods=['GET'])
 @login_required
@@ -113,7 +116,7 @@ def create_booking():
     userid_approver = request.form['approver_id']
     space_id = request.form['space_id']
     approved = False
-    booking = Booking(None, space_id, date_booked, userid_booker, userid_approver, approved)
+    booking = Booking(None, space_id, date_booked, userid_booker, userid_approver, approved, False)
     booking_repository.create(booking)
     return render_template('successfulbooking.html')
     
@@ -143,9 +146,29 @@ def get_unapproved_and_approved_bookings():
     spaces_repository = SpaceRepository(connection)
     unapproved = booking_repository.unapproved_bookings_by_user_id(user_id)
     approved = booking_repository.approved_bookings_by_user_id(user_id)
-    space = spaces_repository.find_by_user_id(user_id)
-    return render_template('guest.html', unapproved=unapproved, approved=approved, space=space)
+    space_ids = set()
+    for booking in unapproved + approved:
+        space_ids.add(booking.space_id)
+    space_names = {}
+    for space_id in space_ids:
+        space = spaces_repository.find(space_id)
+        space_names[space_id] = space.name if space else None
+    return render_template('guest.html', unapproved=unapproved, approved=approved, space_names=space_names)
 
+# Mark newly approved bookings are viewed by guest
+@app.route('/newapprovedbooking', methods=['GET', 'POST'])
+@login_required
+def mark_viewed():
+    connection = get_flask_database_connection(app)
+    user_id = get_user_id()
+    booking_repository = BookingRepository(connection)
+    spaces_repository = SpaceRepository(connection)
+    booking = booking_repository.approved_bookings_by_user_id(user_id)[0]
+    booking_repository.mark_viewed(booking.id)
+    space_id = booking.space_id
+    space_name = spaces_repository.find(space_id)
+    return render_template('newapproval.html', booking = booking, space_name = space_name)
+    
 # Returns Host pending and confirmed bookings by space id 
 
 @app.route('/user/requests/<space_name>/<int:space_id>', methods=['GET'])
@@ -155,10 +178,14 @@ def get_unapproved_and_approved_bookings_by_space(space_name, space_id):
     user_id = get_user_id()
     booking_repository = BookingRepository(connection)
     spaces_repository = SpaceRepository(connection)
+    user_repository = UserRepository(connection)
     unapproved = booking_repository.unapproved_bookings_by_space(user_id, space_id)
     approved = booking_repository.approved_bookings_by_space(user_id, space_id)
     space = spaces_repository.find(space_id)
-    return render_template('requests.html', unapproved=unapproved, approved=approved, space=space)
+    guests = {}
+    for booking in unapproved + approved:
+        guests[booking.id] = user_repository.find(booking.userid_booker).username
+    return render_template('requests.html', unapproved=unapproved, approved=approved, space=space, guests=guests)
 
 # Host approves a booking
 @app.route('/approvebooking', methods=['POST'])
