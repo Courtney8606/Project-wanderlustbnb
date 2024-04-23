@@ -149,6 +149,7 @@ def get_unapproved_and_approved_bookings():
     space_ids = set()
     for booking in unapproved + approved:
         space_ids.add(booking.space_id)
+        booking.date_booked = booking.date_booked.strftime("%d %B %Y")
     space_names = {}
     for space_id in space_ids:
         space = spaces_repository.find(space_id)
@@ -167,7 +168,8 @@ def mark_viewed():
     booking_repository.mark_viewed(booking.id)
     space_id = booking.space_id
     space_name = spaces_repository.find(space_id)
-    return render_template('newapproval.html', booking = booking, space_name = space_name)
+    date_booked = booking.date_booked.strftime("%d %B %Y")
+    return render_template('newapproval.html', booking = booking, date_booked = date_booked, space_name = space_name)
     
 # Returns Host pending and confirmed bookings by space id 
 
@@ -184,6 +186,7 @@ def get_unapproved_and_approved_bookings_by_space(space_name, space_id):
     space = spaces_repository.find(space_id)
     guests = {}
     for booking in unapproved + approved:
+        booking.date_booked = booking.date_booked.strftime("%d %B %Y")
         guests[booking.id] = user_repository.find(booking.userid_booker).username
     return render_template('requests.html', unapproved=unapproved, approved=approved, space=space, guests=guests)
 

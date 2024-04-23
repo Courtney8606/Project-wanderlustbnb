@@ -121,11 +121,18 @@ div.container {
   align-items: center;
   justify-content: center;
   row-gap: 10px;
-  color: #585C68;
+  color: #585c68;
   padding-bottom: 20px;
 }
 
 #checkin {
-  color: #585C68
+  color: #585c68;
 }
-  
+
+#message-icon {
+  color: white;
+}
+
+#new-approval-link {
+  border: 1px solid white;
+}
