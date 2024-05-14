@@ -15,9 +15,6 @@ After cloning the repository, using the CLI, change into the top-level directory
 **Activate your virtual environment**
 * pipenv shell
 
-**Install the virtual browser used for testing**
-* playwright install
-
 **Create a test and development database**
 * createdb wanderlustbnb
 * createdb wanderlustbnb_test
