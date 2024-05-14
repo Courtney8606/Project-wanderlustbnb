@@ -1,4 +1,14 @@
-Welcome to WanderlustBnB, a Python web app inspired by Airbnb. While originally a group project, I've significantly expanded it individually, focusing on delivering an array of new features to enhance the user experience. 
+## WanderlustBnB
+
+Welcome to WanderlustBnB, a Python web app inspired by Airbnb allowing users to either search for and book holiday properties as a Guest, or manage property listings as a Host. While originally a group project, I've been excited to take this project forward and significantly expanded it individually, delivering an array of new features to enhance the user experience. 
+
+# Key Features
+
+1. Ability to filter your property search by availability.
+2. Integrated DateTime booking calendar with any confirmed booking dates disabled within the calendar for that property.
+3. Ability to manage all properties and bookings via a Host account, including creating a new property listing (with image upload), updating a property's details, deleting a property, approving or rejecting booking requests, and reviewing confirmed bookings. 
+4. Ability to navigate to a Guest account, to review all confirmed or pending booking requests.
+5. In-app notifications for any newly approved booking requests. 
 
 # Installation instructions
 
