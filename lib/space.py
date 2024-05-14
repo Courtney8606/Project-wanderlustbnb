@@ -9,8 +9,7 @@ class Space():
         self.user_id = user_id
         self.image_title = image_title
 
-    # This method allows our tests to assert that the objects it expects
-    # are the objects we made based on the database records.
+    # Equality method
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
     

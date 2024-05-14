@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, flash, jsonify, request, render_template, url_for, session, redirect
+from flask import Flask, flash, jsonify, request, render_template, url_for, session, redirect, abort
 from lib import space_repository
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import Space, SpaceRepository
@@ -26,7 +26,7 @@ app.secret_key = "tangerine"
 
 # File upload setup
 
-UPLOAD_FOLDER = '/Users/courtneysuhr/Projects/makersbnb-python-tangerine/static/uploads/'
+UPLOAD_FOLDER = '/Users/courtneysuhr/developer/projects/Project-bnb/static/uploads/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
@@ -43,6 +43,25 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def error_handler_decorator(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except ValueError as e:
+            # Handle ValueError (400 Bad Request)
+            print(f"An error occurred: {str(e)}")
+            return render_template('error.html', error=e, status_code=400)
+        except FileNotFoundError as e:
+            # Handle FileNotFoundError (404 Not Found)
+            print(f"An error occurred: {str(e)}")
+            return render_template('error.html', error=e, status_code=404)
+        except Exception as e:
+            # Handle other exceptions (500 Internal Server Error)
+            print(f"An error occurred: {str(e)}")
+            return render_template('error.html', error=e, status_code=500)
+    return wrapper
+
 def get_user_id():
     username = session.get('user')
     connection = get_flask_database_connection(app)
@@ -54,10 +73,11 @@ def get_user_id():
 # == Routes ==
 
 # GET /index - Returns the homepage
-# http://localhost:5000/
+# http://localhost:5001/
 
 @app.route('/index', methods=['GET'])
 @login_required
+@error_handler_decorator
 def get_index():
     connection = get_flask_database_connection(app) 
     user_id = get_user_id()
@@ -69,6 +89,7 @@ def get_index():
 
 @app.route('/filterbydate', methods=['GET'])
 @login_required
+@error_handler_decorator
 def filter_index_by_dates_available():
     connection = get_flask_database_connection(app) 
     space_repository = SpaceRepository(connection)
@@ -96,6 +117,7 @@ def filter_index_by_dates_available():
 # Returns a property by space id
 @app.route('/spaces/<int:space_id>', methods=['GET'])
 @login_required
+@error_handler_decorator
 def get_space_by_id(space_id):
     connection = get_flask_database_connection(app)
     user_id = get_user_id()
@@ -108,6 +130,7 @@ def get_space_by_id(space_id):
 # Create a new booking request
 @app.route('/spaces/booking', methods=['POST'])
 @login_required
+@error_handler_decorator
 def create_booking():
     connection = get_flask_database_connection(app)
     userid_booker = get_user_id()
@@ -123,12 +146,14 @@ def create_booking():
 # Returns user account page
 @app.route('/account', methods=['GET'])
 @login_required
+@error_handler_decorator
 def get_account_page():
     return render_template('account.html')
 
 # Returns Host account page with a list of active properties by user id
 @app.route('/host', methods=['GET'])
 @login_required
+@error_handler_decorator
 def get_host_page():
     connection = get_flask_database_connection(app)
     user_id = get_user_id()
@@ -139,6 +164,7 @@ def get_host_page():
 # Returns Guest Account page to review own holiday bookings by user id
 @app.route('/guest', methods=['GET'])
 @login_required
+@error_handler_decorator
 def get_unapproved_and_approved_bookings():
     connection = get_flask_database_connection(app)
     user_id = get_user_id()
@@ -159,6 +185,7 @@ def get_unapproved_and_approved_bookings():
 # Mark newly approved bookings are viewed by guest
 @app.route('/newapprovedbooking', methods=['GET', 'POST'])
 @login_required
+@error_handler_decorator
 def mark_viewed():
     connection = get_flask_database_connection(app)
     user_id = get_user_id()
@@ -175,6 +202,7 @@ def mark_viewed():
 
 @app.route('/user/requests/<space_name>/<int:space_id>', methods=['GET'])
 @login_required
+@error_handler_decorator
 def get_unapproved_and_approved_bookings_by_space(space_name, space_id):
     connection = get_flask_database_connection(app)
     user_id = get_user_id()
@@ -193,6 +221,7 @@ def get_unapproved_and_approved_bookings_by_space(space_name, space_id):
 # Host approves a booking
 @app.route('/approvebooking', methods=['POST'])
 @login_required
+@error_handler_decorator
 def approve_booking():
     connection = get_flask_database_connection(app)
     booking_repository = BookingRepository(connection)
@@ -206,6 +235,7 @@ def approve_booking():
 # Host Reject a booking
 @app.route('/reject/<int:booking_id>', methods=['POST'])
 @login_required
+@error_handler_decorator
 def reject_booking(booking_id):
     connection = get_flask_database_connection(app)
     booking_repository = BookingRepository(connection)
@@ -219,12 +249,14 @@ def reject_booking(booking_id):
 # Returns form to create a new property listing
 @app.route('/new', methods=['GET'])
 @login_required
+@error_handler_decorator
 def get_listing_page():
     return render_template('createlisting.html')
 
 # Creates a new property listing and updates all()
 @app.route('/newlisting', methods=['POST'])
 @login_required
+@error_handler_decorator
 def create_a_listing():
     connection = get_flask_database_connection(app)
     user_id = get_user_id()
@@ -255,6 +287,7 @@ def create_a_listing():
 # Render Update a property listing page
 @app.route('/user/update/<space_name>/<int:space_id>', methods=['GET'])
 @login_required
+@error_handler_decorator
 def get_space_update_page(space_name, space_id):
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
@@ -264,6 +297,7 @@ def get_space_update_page(space_name, space_id):
 # Update a property
 @app.route('/updated/<int:space_id>', methods=['GET', 'POST'])
 @login_required
+@error_handler_decorator
 def update_property_listing(space_id):
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
@@ -292,6 +326,7 @@ def update_property_listing(space_id):
 # Host deletes a space
 @app.route('/delete/<int:space_id>', methods=['POST'])
 @login_required
+@error_handler_decorator
 def delete_space(space_id):
     connection = get_flask_database_connection(app)
     spaces_repository = SpaceRepository(connection)
@@ -301,11 +336,13 @@ def delete_space(space_id):
 
 # Renders Login page
 @app.route('/', methods=['GET'])
+@error_handler_decorator
 def get_login_page():
     return render_template('login.html')
 
 # User can login
 @app.route('/', methods=['POST'])
+@error_handler_decorator
 def post_login():
     connection = get_flask_database_connection(app)
     user_repository = UserRepository(connection)
@@ -321,11 +358,13 @@ def post_login():
     
 # Renders signup page
 @app.route('/signup', methods=['GET'])
+@error_handler_decorator
 def get_signup_page():
     return render_template('signup.html')
 
 # User can sign up and login
 @app.route('/signup', methods=['POST'])
+@error_handler_decorator
 def post_signup_page():
     connection = get_flask_database_connection(app) 
     user_repository = UserRepository(connection)
@@ -347,6 +386,7 @@ def post_signup_page():
     
 @app.route('/logout', methods=['GET'])
 @login_required
+@error_handler_decorator
 def log_out():
     session.pop('user', None)
     return redirect('/')
@@ -354,6 +394,7 @@ def log_out():
 # Debug route to session user
 
 @app.route('/debug')
+@error_handler_decorator
 @login_required
 def debug_session():
     session_user = session.get('user')
@@ -364,4 +405,4 @@ def debug_session():
 # They also start the server configured to use the test database
 # if started in test mode.
 if __name__ == '__main__':
-    app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
+    app.run(debug=True, port=int(os.environ.get('PORT', 5001)))

@@ -1,27 +1,39 @@
-## Setup
+# Installation instructions
 
-```shell
-# Install dependencies and set up the virtual environment
-; pipenv install
+These instructions are for macOS, and it is assumed that that the following are already installed:
 
-# Activate the virtual environment
-; pipenv shell
+* pipenv
+* python (if your interpreter is called using the command python3 or any other command incorporating version number, you may need to amend instructions accordingly)
+* PostgreSQL 
 
-# Install the virtual browser we will use for testing
-; playwright install
+After cloning the repository, using the CLI, change into the top-level directory of the locally cloned version. Then execute the following commands in sequence:
 
-# Create a test and development database
-; createdb YOUR_PROJECT_NAME
-; createdb YOUR_PROJECT_NAME_TEST
+**Install any dependencies and set up your virtual environment**
+* pipenv install 
+(ensure Flask and psycopg are installed)
 
-# Open lib/database_connection.py and change the database names
-; open lib/database_connection.py
+**Activate your virtual environment**
+* pipenv shell
 
-# Run the tests (with extra logging)
-; pytest 
+**Install the virtual browser used for testing**
+* playwright install
 
-# Run the app
+**Create a test and development database**
+* createdb wanderlustbnb
+* createdb wanderlustbnb_test
+
+**Seed your databases**
+* psql wanderlustbnb < seeds/spaces_table.sql
+* psql wanderlustbnb_test < seeds/spaces_table.sql
+
+**Change the UPLOAD_FOLDER path in app.py to a relevant local path /*your*/*path*/*here*/Project-wanderlustbnb/static/uploads/'**
+
+**Run the app**
 ; python app.py
 
-# Now visit http://localhost:5000/index in your browser
-```
+At this stage, the back-end server should be running. Open the following url in your browser: 
+
+http://localhost:5001
+
+# You can run the tests with the following command within the virtual environment
+* pytest 

@@ -84,7 +84,7 @@ def test_redirect_login(page, test_web_address, db_connection):
     db_connection.seed('seeds/spaces_table.sql')
     page.goto(f'http://{test_web_address}/index')
     h1_tag = page.locator('h1')
-    expect(h1_tag).to_have_text('Login | MakersBnB')
+    expect(h1_tag).to_have_text('Login | WanderlustBnB')
 
 # User can create a new listing when logged in 
 
@@ -117,7 +117,7 @@ def test_create_a_listing_no_session(db_connection, page, test_web_address):
     db_connection.seed("seeds/spaces_table.sql")
     page.goto(f'http://{test_web_address}/new')
     h1_tag = page.locator('h1')
-    expect(h1_tag).to_have_text('Login | MakersBnB')
+    expect(h1_tag).to_have_text('Login | WanderlustBnB')
 
 # Individual spaces render when user is logged in
 
@@ -136,7 +136,7 @@ def test_get_individual_space_fails_no_session(page, test_web_address, db_connec
     db_connection.seed('seeds/spaces_table.sql')
     page.goto(f'http://{test_web_address}/spaces/{space_id}')
     h1_tag = page.locator('h1')
-    expect(h1_tag).to_have_text('Login | MakersBnB')
+    expect(h1_tag).to_have_text('Login | WanderlustBnB')
 
 
 # Test successfully create a property booking
@@ -235,7 +235,7 @@ def test_logout(page, test_web_address, db_connection):
     expect(login_form).to_be_visible()
     page.goto(f'http://{test_web_address}/')
     h1_tag = page.locator('h1')
-    expect(h1_tag).to_have_text('Login | MakersBnB')
+    expect(h1_tag).to_have_text('Login | WanderlustBnB')
 
 def test_new_guest_message_after_approval(page, test_web_address, db_connection):
     db_connection.seed('seeds/spaces_table.sql')

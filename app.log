@@ -1,0 +1,215 @@
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+ERROR:app:Error: name 'user_id3' is not defined
+Traceback (most recent call last):
+  File "/Users/courtneysuhr/Developer/projects/Project-bnb/app.py", line 79, in get_index
+    approved_bookings = booking_repository.approved_bookings_by_user_id(user_id3)
+                                                                        ^^^^^^^^
+NameError: name 'user_id3' is not defined
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:50] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:50] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:50] "[36mGET /static/css/successfulbooking.css HTTP/1.1[0m" 304 -
+ERROR:app:Error: name 'user_id3' is not defined
+Traceback (most recent call last):
+  File "/Users/courtneysuhr/Developer/projects/Project-bnb/app.py", line 79, in get_index
+    approved_bookings = booking_repository.approved_bookings_by_user_id(user_id3)
+                                                                        ^^^^^^^^
+NameError: name 'user_id3' is not defined
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:52] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:52] "[36mGET /static/css/successfulbooking.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:52] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:54] "GET /account HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:54] "[36mGET /static/css/account.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:54] "[36mGET /static/images/house.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:54] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:54] "[36mGET /static/images/suitcase.png HTTP/1.1[0m" 304 -
+ERROR:app:Error: name 'user_id3' is not defined
+Traceback (most recent call last):
+  File "/Users/courtneysuhr/Developer/projects/Project-bnb/app.py", line 79, in get_index
+    approved_bookings = booking_repository.approved_bookings_by_user_id(user_id3)
+                                                                        ^^^^^^^^
+NameError: name 'user_id3' is not defined
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:56] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:56] "[36mGET /static/css/successfulbooking.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:21:56] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+ERROR:app:Error: name 'user_id3' is not defined
+Traceback (most recent call last):
+  File "/Users/courtneysuhr/Developer/projects/Project-bnb/app.py", line 79, in get_index
+    approved_bookings = booking_repository.approved_bookings_by_user_id(user_id3)
+                                                                        ^^^^^^^^
+NameError: name 'user_id3' is not defined
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:22:40] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:22:40] "[36mGET /static/css/successfulbooking.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:22:40] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/courtneysuhr/Developer/projects/Project-bnb/app.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+ERROR:app:Error: name 'user_id3' is not defined
+Traceback (most recent call last):
+  File "/Users/courtneysuhr/Developer/projects/Project-bnb/app.py", line 79, in get_index
+    approved_bookings = booking_repository.approved_bookings_by_user_id(user_id3)
+                                                                        ^^^^^^^^
+NameError: name 'user_id3' is not defined
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:23:52] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:23:52] "[36mGET /static/css/successfulbooking.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:23:52] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/courtneysuhr/Developer/projects/Project-bnb/app.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+ERROR:app:Error: index5.html
+Traceback (most recent call last):
+  File "/Users/courtneysuhr/Developer/projects/Project-bnb/app.py", line 81, in get_index
+    return render_template('index5.html', spaces=spaces, approved_bookings=approved_bookings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/loaders.py", line 125, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: index5.html
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:22] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:22] "[36mGET /static/css/successfulbooking.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:22] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:42] "GET /account HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:42] "[36mGET /static/css/account.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:42] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:42] "[36mGET /static/images/house.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:42] "[36mGET /static/images/suitcase.png HTTP/1.1[0m" 304 -
+ERROR:app:Error: index5.html
+Traceback (most recent call last):
+  File "/Users/courtneysuhr/Developer/projects/Project-bnb/app.py", line 81, in get_index
+    return render_template('index5.html', spaces=spaces, approved_bookings=approved_bookings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/loaders.py", line 125, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: index5.html
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:43] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:43] "[36mGET /static/css/successfulbooking.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:24:43] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/courtneysuhr/Developer/projects/Project-bnb/app.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+INFO:werkzeug: * Detected change in '/Users/courtneysuhr/Developer/projects/Project-bnb/app.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:10] "GET /index HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:10] "[33mGET /assets/dist/js/bootstrap.bundle.min.js HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:10] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:10] "[36mGET /static/css/carousel.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:10] "[36mGET /static/images/carousel1.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:10] "[36mGET /static/images/carousel2.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:10] "[36mGET /static/images/carousel3.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/courtneysuhr/Developer/projects/Project-bnb/app.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "GET /index HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "[36mGET /static/images/carousel1.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "[36mGET /static/images/carousel2.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "[36mGET /static/images/carousel3.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "[36mGET /static/css/carousel.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "[36mGET /static/uploads/house1.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "[33mGET /assets/dist/js/bootstrap.bundle.min.js HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "[36mGET /static/uploads/house3.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "[36mGET /static/uploads/house2.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:25:17] "[36mGET /static/uploads/house4.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/courtneysuhr/Developer/projects/Project-bnb/app.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+INFO:werkzeug: * Detected change in '/Users/courtneysuhr/Developer/projects/Project-bnb/app.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "GET /index HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "[36mGET /static/css/carousel.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "[36mGET /static/images/carousel2.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "[36mGET /static/uploads/house1.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "[36mGET /static/images/carousel3.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "[36mGET /static/images/carousel1.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "[36mGET /static/uploads/house2.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "[33mGET /assets/dist/js/bootstrap.bundle.min.js HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "[36mGET /static/uploads/house3.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:22] "[36mGET /static/uploads/house4.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/courtneysuhr/Developer/projects/Project-bnb/app.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+ERROR:app:Error: index5.html
+Traceback (most recent call last):
+  File "/Users/courtneysuhr/Developer/projects/Project-bnb/app.py", line 85, in get_index
+    return render_template('index5.html', spaces=spaces, approved_bookings=approved_bookings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/jinja2/loaders.py", line 125, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/courtneysuhr/.local/share/virtualenvs/Project-bnb-pUnfc1gm/lib/python3.11/site-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: index5.html
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:31] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:31] "[36mGET /static/images/paperplane.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2024 10:28:31] "[36mGET /static/css/successfulbooking.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+INFO:werkzeug: * Detected change in '/Users/courtneysuhr/Developer/projects/Project-bnb/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 572-778-978
+INFO:werkzeug: * Detected change in '/Users/courtneysuhr/Developer/projects/Project-bnb/app.py', reloading
+INFO:werkzeug: * Restarting with stat

@@ -91,5 +91,6 @@ class BookingRepository():
     def update_approval(self, booking_id):
         self._connection.execute('UPDATE bookings SET approved = True, display_message_icon = True WHERE id = %s', [booking_id])
 
+    # Mark a booking as viewed (notifications)
     def mark_viewed(self, booking_id):
         self._connection.execute('UPDATE bookings SET display_message_icon = False WHERE id = %s', [booking_id])

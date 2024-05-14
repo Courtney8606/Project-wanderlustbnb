@@ -3,13 +3,13 @@ from flask import g
 from psycopg.rows import dict_row
 
 
-# This class helps us interact with the database and wraps the underlying psycopg library that we are using.
+# This class helps us interact with the database and wraps the underlying psycopg library being used
 
 
 class DatabaseConnection:
   
-    DEV_DATABASE_NAME = "makersbnb"
-    TEST_DATABASE_NAME = "makersbnb_test"
+    DEV_DATABASE_NAME = "wanderlustbnb"
+    TEST_DATABASE_NAME = "wanderlustbnb_test"
 
     def __init__(self, test_mode=False):
         self.test_mode = test_mode
@@ -24,7 +24,7 @@ class DatabaseConnection:
             raise Exception(f"Couldn't connect to the database {self._database_name()}! " \
                     f"Did you create it using `createdb {self._database_name()}`?")
 
-    # This method seeds the database with the given SQL file. We use it to set up our database ready for our tests or application.
+    # This method seeds the database with the given SQL file. 
     def seed(self, sql_filename):
         self._check_connection()
         if not os.path.exists(sql_filename):
@@ -33,7 +33,7 @@ class DatabaseConnection:
             cursor.execute(open(sql_filename, "r").read())
             self.connection.commit()
 
-    # This method executes an SQL query on the database. It allows you to set some parameters too. You'll learn about this later.
+    # This method executes an SQL query on the database. 
     def execute(self, query, params=[]):
         self._check_connection()
         with self.connection.cursor() as cursor:
