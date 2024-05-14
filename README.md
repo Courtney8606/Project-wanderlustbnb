@@ -1,3 +1,5 @@
+Welcome to WanderlustBnB, a Python web app inspired by Airbnb. While originally a group project, I've significantly expanded it individually, focusing on delivering an array of new features to enhance the user experience. 
+
 # Installation instructions
 
 These instructions are for macOS, and it is assumed that that the following are already installed:
