@@ -3,14 +3,14 @@
 These instructions are for macOS, and it is assumed that that the following are already installed:
 
 * pipenv
-* python (if your interpreter is called using the command python3 or any other command incorporating version number, you may need to amend instructions accordingly)
+* python (if you use python3 or any other command incorporating a version number, you may need to amend instructions accordingly)
 * PostgreSQL 
 
 After cloning the repository, using the CLI, change into the top-level directory of the locally cloned version. Then execute the following commands in sequence:
 
 **Install any dependencies and set up your virtual environment**
 * pipenv install 
-(ensure Flask and psycopg are installed)
+(ensure Flask, playwright and psycopg are installed)
 
 **Activate your virtual environment**
 * pipenv shell
@@ -35,5 +35,5 @@ At this stage, the back-end server should be running. Open the following url in 
 
 http://localhost:5001
 
-# You can run the tests with the following command within the virtual environment
+**You can run the tests with the following command within the virtual environment**
 * pytest 
