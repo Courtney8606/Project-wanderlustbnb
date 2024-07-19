@@ -7,3 +7,13 @@ body {
 .booking-container {
   padding-top: 10px;
 }
+
+#back-button {
+  text-decoration: none;
+  color: white;
+}
+
+.back-button-requests {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

@@ -12,12 +12,11 @@
   </head>
 
   <body>
-
     <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <a class="nav-link active" aria-current="page" href="/index">
         <img
           class="primary-icon"
-          src="../static/images/paperplane.png"
+          src="/static/images/paperplane.png"
           class="logo"
           style="width: 60px"
         />
@@ -33,51 +32,82 @@
       </ul>
     </div>
 
-
     <h1 class="my-properties">My Properties</h1>
 
     <a class="host-list" href="/new">List a new property</a>
-    
+
     <div id="spaces" class="properties">
-
       {% for space in spaces %}
-      
-      <div class="col-lg-4">
-        <form id="deleteForm{{space.id}}" method="POST" action="/delete/{{space.id}}">
-          <a class="property-action" href="#" onclick="document.getElementById('deleteForm{{space.id}}').submit(); return false;">Delete property</a>
-        </form>
-        <img class="host-properties" role="img" preserveAspectRatio="xMidYMid slice" focusable="false" src="static/uploads/{{space.image_title}}">
-        <h3 class="fw-normal">{{space.name}}</h3>
-        <p style="margin-bottom: 0;">{{space.location}}</p>
-        <div class="property-actions">
-        <li class="property-list"><a class="property-action" href="/user/requests/{{space.name}}/{{space.id}}">Review booking requests</a></li>
-        <li class="property-list"><a class="property-action" href="/user/requests/{{space.name}}/{{space.id}}">Review bookings</a></li>
-        <li class="property-list"><a class="property-action" href="/spaces/{{space.id}}">View property details</a></li>
-        <li class="property-list"><a class="property-action" href="/user/update/{{space.name}}/{{space.id}}">Update property details</a></li>
-        </div>
-     
 
+      <div class="col-lg-4">
+        <form
+          id="deleteForm{{space.id}}"
+          method="POST"
+          action="/delete/{{space.id}}"
+        >
+          <a
+            class="property-action"
+            href="#"
+            onclick="document.getElementById('deleteForm{{space.id}}').submit(); return false;"
+            >Delete property</a
+          >
+        </form>
+        <img
+          class="host-properties"
+          role="img"
+          preserveAspectRatio="xMidYMid slice"
+          focusable="false"
+          src="static/uploads/{{space.image_title}}"
+        />
+        <h3 class="fw-normal">{{space.name}}</h3>
+        <p style="margin-bottom: 0">{{space.location}}</p>
+        <div class="property-actions">
+          <li class="property-list">
+            <a
+              class="property-action"
+              href="/user/requests/{{space.name}}/{{space.id}}"
+              >Review booking requests</a
+            >
+          </li>
+          <li class="property-list">
+            <a
+              class="property-action"
+              href="/user/requests/{{space.name}}/{{space.id}}"
+              >Review bookings</a
+            >
+          </li>
+          <li class="property-list">
+            <a class="property-action" href="/spaces/{{space.id}}"
+              >View property details</a
+            >
+          </li>
+          <li class="property-list">
+            <a
+              class="property-action"
+              href="/user/update/{{space.name}}/{{space.id}}"
+              >Update property details</a
+            >
+          </li>
+        </div>
       </div>
 
       {% endfor %}
-
     </div>
 
     <script
-    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"
-  ></script>
-
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

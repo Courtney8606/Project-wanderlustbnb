@@ -15,3 +15,12 @@ div.container {
 .booking-container {
   padding-top: 10px;
 }
+
+#back-button {
+  text-decoration: none;
+  color: white;
+}
+
+.update-button {
+  margin-left: 50px;
+}

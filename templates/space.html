@@ -35,7 +35,7 @@
                     if (disabledDates.includes(formattedDate)) {
                         return {
                             enabled: false,
-                            classes: 'disabled-date' 
+                            classes: 'disabled-date'
                         };
                     }
                     return {
@@ -61,7 +61,7 @@
         <a class="nav-link active" aria-current="page" href="/index">
           <img
             class="primary-icon"
-            src="../static/images/paperplane.png"
+            src="/static/images/paperplane.png"
             class="logo"
             style="width: 60px"
           />
@@ -92,17 +92,21 @@
 
     <div class="container">
       <div>
-        <img class="spaceid-image" role="img" src="/static/uploads/{{space.image_title}}">
+        <img
+          class="spaceid-image"
+          role="img"
+          src="/static/uploads/{{space.image_title}}"
+        />
       </div>
       <div class="space-info">
-      <h1>{{space.name}}</h1>
-      <p>
-        <b>Location:</b> {{space.location}} <br />
-        <b>Description:</b> {{space.description}} <br />
-        <b>Price per night:</b> £{{space.price}}
-      </p>
+        <h1>{{space.name}}</h1>
+        <p>
+          <b>Location:</b> {{space.location}} <br />
+          <b>Description:</b> {{space.description}} <br />
+          <b>Price per night:</b> £{{space.price}}
+        </p>
       </div>
-      
+
       <form id="bookingForm" method="POST" action="/spaces/booking">
         <h2>Booking Form</h2>
         <div class="form-group">
@@ -119,6 +123,13 @@
         <input type="hidden" name="approver_id" value="{{space.user_id}}" />
         <input type="hidden" name="date_booked" id="date_booked" />
       </form>
+      <button
+        onclick="window.history.back();"
+        class="btn btn-primary"
+        id="space-button"
+      >
+        Go Back
+      </button>
     </div>
   </body>
 </html>

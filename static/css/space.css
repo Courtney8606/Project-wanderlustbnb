@@ -25,8 +25,11 @@ div.container {
 
 .spaceid-image {
   width: 600px;
-  height: 600px; 
-  border-radius: 7px; 
+  height: 600px;
+  border-radius: 7px;
   margin-bottom: 30px;
 }
 
+#space-button {
+  margin-top: 10px;
+}

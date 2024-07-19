@@ -52,9 +52,9 @@ INSERT INTO users (username, name, password) VALUES ('mrs_dursley', 'Petunia Dur
 INSERT INTO users (username, name, password) VALUES ('ratatouille', 'Remy Rat', 'kissthecook');
 INSERT INTO users (username, name, password) VALUES ('montoya', 'Inigo Montoya', 'prepare2die');
 
-INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon) VALUES (4, '2024-07-12', 1, 3, False, False);
-INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon) VALUES (3, '2024-07-12', 2, 3, False, False);
-INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon) VALUES (2, '2024-07-12', 1, 2, True, True);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon) VALUES (4, '2024-08-12', 1, 3, False, False);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon) VALUES (3, '2024-08-14', 2, 3, False, False);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon) VALUES (2, '2024-08-16', 1, 2, True, True);
 
 INSERT INTO upload (title) VALUES ('house1.jpg');
 INSERT INTO upload (title) VALUES ('house2.jpg');

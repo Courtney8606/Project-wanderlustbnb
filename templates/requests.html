@@ -16,7 +16,7 @@
       <a class="nav-link active" aria-current="page" href="/index">
         <img
           class="primary-icon"
-          src="../static/images/paperplane.png"
+          src="/static/images/paperplane.png"
           class="logo"
           style="width: 60px"
         />
@@ -42,6 +42,9 @@
         min-height: 200px;
       "
     >
+      <button class="btn btn-primary back-button-requests">
+        <a id="back-button" href="/host">Back</a>
+      </button>
       <h1 style="text-align: center">Bookings for approval</h1>
 
       {% for booking in unapproved %} {% for booking_id, guest_username in

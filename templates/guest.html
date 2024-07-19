@@ -16,7 +16,7 @@
       <a class="nav-link active" aria-current="page" href="/index">
         <img
           class="primary-icon"
-          src="../static/images/paperplane.png"
+          src="/static/images/paperplane.png"
           class="logo"
           style="width: 60px"
         />
@@ -43,6 +43,9 @@
         min-height: 200px;
       "
     >
+      <button class="btn btn-primary" id="back-button-requests">
+        <a class="back-button-guest" href="/account"> Go Back</a>
+      </button>
       <h1 style="text-align: center">Bookings awaiting approval</h1>
       {% for booking in unapproved %} {% set space_name =
       space_names[booking.space_id] %} {% if space_name %}
