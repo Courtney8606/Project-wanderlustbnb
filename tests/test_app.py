@@ -71,12 +71,15 @@ def test_get_all_spaces(page, test_web_address, db_connection):
 def test_get_all_spaces_filtered_search(page, test_web_address, db_connection):
     db_connection.seed('seeds/spaces_table.sql')
     user_logs_in(page, test_web_address) 
-    page.fill("input[name='checkin']", "2024-07-12")
+    page.fill("input[name='checkin']", "2024-11-16")
     page.click("button[type='Submit']")
     div_tags = page.locator('div.col-lg-4 h3')
-    expect(div_tags).to_have_text(
-        'Wizarding Cupboard'
-    )
+    expect(div_tags).to_have_text([
+        'Wizarding Cupboard',
+        'Paella Place',
+        'Mi Casa'
+
+    ])
 
 # When trying to access /index, return to Login page if user if not logged in
 
@@ -127,7 +130,7 @@ def test_get_individual_space_1(page, test_web_address, db_connection, space_id=
     page.goto(f'http://{test_web_address}/spaces/{space_id}')
     header = page.locator('h1')
     space_info = page.locator('p')
-    expect(space_info).to_have_text('Location: London \n Description: A cosy room under the stairs. Comes with complementary spiders. \n Price per night: £50.0')
+    expect(space_info).to_have_text('Location: London \n Description: A cosy room under the stairs. Comes with complementary spiders. \n Price per night: £50.00')
     expect(header).to_have_text('Wizarding Cupboard')
 
 # Individual spaces don't render when user is not logged in
@@ -206,7 +209,7 @@ def test_reject_booking(page, test_web_address, db_connection, space_id=4, space
     unapproved_booking_container = page.query_selector('.booking-container#unapproved')
     unapproved_text = unapproved_booking_container.inner_text()
     assert "Bookings for approval" in unapproved_text
-    assert len(unapproved_text.strip()) == len("Bookings for approval")
+    assert len(unapproved_text.strip()) == len("Back\nBookings for approval")
 
 # Test navigation to Guestaccount with correct bookings available for review
 
@@ -244,4 +247,4 @@ def test_new_guest_message_after_approval(page, test_web_address, db_connection)
     page.fill("input[name='password']", "hatemynephew123")
     page.click("button[type='submit']")  
     message = page.locator('#new-approval-link')
-    expect(message).to_have_text('New Message 🔔')
+    expect(message).to_have_text('New Message ✉')

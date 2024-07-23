@@ -15,6 +15,7 @@ from lib.image_repository import ImageRepository
 from lib.image import Image
 from functools import wraps
 import sys
+import stripe
 
 import psycopg2
 import psycopg2.extras
@@ -23,7 +24,8 @@ import psycopg2.extras
 # Creating a new Flask app
 app = Flask(__name__, template_folder='templates')
 app.secret_key = "tangerine"
-
+stripe.api_key = 'sk_test_51P12dm2NN23LTsAHEOdMl6MN29rvNKYcL4ZKGPXfEpjPAQhdJjohZtGn5EHGZV8AbJbs247WZng23QuWZf732LbD00N8dWs0H8'
+YOUR_DOMAIN = 'http://localhost:5001'
 # File upload setup
 
 UPLOAD_FOLDER = '/Users/courtneysuhr/developer/projects/Project-bnb/static/uploads/'
@@ -77,7 +79,7 @@ def get_user_id():
 
 @app.route('/index', methods=['GET'])
 @login_required
-@error_handler_decorator
+# @error_handler_decorator
 def get_index():
     connection = get_flask_database_connection(app) 
     user_id = get_user_id()
@@ -139,7 +141,7 @@ def create_booking():
     userid_approver = request.form['approver_id']
     space_id = request.form['space_id']
     approved = False
-    booking = Booking(None, space_id, date_booked, userid_booker, userid_approver, approved, False)
+    booking = Booking(None, space_id, date_booked, userid_booker, userid_approver, approved, False, False)
     booking_repository.create(booking)
     return render_template('successfulbooking.html')
     
@@ -400,9 +402,59 @@ def debug_session():
     session_user = session.get('user')
     return f"Session User: {session_user}"
 
+# Stripe Payment Integration
 
-# These lines start the server if you run this file directly
-# They also start the server configured to use the test database
-# if started in test mode.
+@app.route('/pay/<int:booking_id>/<int:space_id>', methods=['GET', 'POST'])
+def create_checkout_session(booking_id, space_id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    booking = booking_repository.booking_by_booking_id(booking_id)
+    space_repository = SpaceRepository(connection)
+    space = space_repository.find(space_id)
+    
+    price = space.price
+    name = space.name
+    date = booking.date_booked
+    booking_id_str = str(booking_id) 
+    
+    try:
+        # Creating a Stripe Price object dynamically
+        price_data = stripe.Price.create(
+            unit_amount=int(price * 100),  # Stripe expects amount in pence
+            currency='gbp',
+            product_data={
+                'name': name,
+                'metadata': {
+                    'booking_id': booking_id_str,
+                    'space_id': str(space_id),
+                    'date': str(date)
+                }
+            }
+        )
+        
+        # Creating the checkout session
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    'price': price_data.id,
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=f'{YOUR_DOMAIN}/success/{booking_id}',
+            cancel_url=f'{YOUR_DOMAIN}/guest',
+        )
+    except Exception as e:
+        return str(e)
+
+    return redirect(checkout_session.url, code=303)
+
+@app.route('/success/<int:booking_id>', methods=['GET', 'POST'])
+def successful_payment(booking_id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    booking_repository.update_payment_status(booking_id)
+    return render_template('/success.html')
+
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5001)))

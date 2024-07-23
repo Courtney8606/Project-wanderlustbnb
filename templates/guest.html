@@ -70,7 +70,14 @@
       space_names[booking.space_id] %} {% if space_name %}
       <h3>Property: {{ space_name }}</h3>
       <p>Date booked: {{ booking.date_booked }}</p>
-      {% endif %} {% endfor %}
+      {% if not booking.paid %}
+      <button
+        class="btn btn-primary"
+        onclick="location.href='/pay/{{ booking.id }}/{{ booking.space_id }}'"
+      >
+        Pay now
+      </button>
+      {% endif %} {% endif %} {% endfor %}
     </div>
   </body>
 </html>

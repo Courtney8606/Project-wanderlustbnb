@@ -34,7 +34,8 @@ CREATE TABLE bookings (
   userid_booker int,
   userid_approver int,
   approved bool DEFAULT false,
-  display_message_icon bool
+  display_message_icon bool,
+  paid bool DEFAULT false
 );
 
 CREATE SEQUENCE IF NOT EXISTS upload_id_seq;
@@ -52,9 +53,9 @@ INSERT INTO users (username, name, password) VALUES ('mrs_dursley', 'Petunia Dur
 INSERT INTO users (username, name, password) VALUES ('ratatouille', 'Remy Rat', 'kissthecook');
 INSERT INTO users (username, name, password) VALUES ('montoya', 'Inigo Montoya', 'prepare2die');
 
-INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon) VALUES (4, '2024-08-12', 1, 3, False, False);
-INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon) VALUES (3, '2024-08-14', 2, 3, False, False);
-INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon) VALUES (2, '2024-08-16', 1, 2, True, True);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon, paid) VALUES (4, '2024-11-12', 1, 3, False, False, False);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon, paid) VALUES (3, '2024-11-14', 2, 3, False, False, False);
+INSERT INTO bookings (space_id, date_booked, userid_booker, userid_approver, approved, display_message_icon, paid) VALUES (2, '2024-11-16', 1, 2, True, True, False);
 
 INSERT INTO upload (title) VALUES ('house1.jpg');
 INSERT INTO upload (title) VALUES ('house2.jpg');

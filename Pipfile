@@ -13,6 +13,7 @@ pytest-xprocess = "*"
 py = "*"
 playwright = "*"
 prettier = "*"
+stripe = "*"
 
 [dev-packages]
 autopep8 = "*"
